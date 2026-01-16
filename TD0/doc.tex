@@ -48,17 +48,10 @@ en optimisation.
 \section{Prérequis : valeurs propres}
 \label{sec:calcul}
 
-%% \begin{exercice}
-%%   Soit $\vec{a} = (a_1,\dots,a_d) \in \R^d$.
-%%   \begin{itemize}
-%%   \item  Calculez le gradient de la fonction $f(\vec{x}) = \vex{x}\cdot\vec{a}$.  
-%%   \item  Calculez le gradient de la fonction $f(\vec{x}) = (\vex{x}\cdot\vec{a})^2$.  
-%%   \end{itemize}
-%% \end{exercice}
-
 \begin{exercice}
-  Par définition, un vecteur propre $\vec{x}$ d'une matrice carrée $M$, et sa valeur propre
-  associée $\lambda$, vérifient $M\vec{x} = \lambda \vec{x}$.
+  Soit $M$ une matrice carrée. Un vecteur non nul $\vec{x}$ qui, associé
+  à un scalaire $\lambda$, vérifie $M\vec{x} = \lambda \vec{x}$ est appelé
+  vecteur propre. Le scalaire associé est appelé valeur propre.
 
   \begin{enumerate}
   \item Donnez les valeurs propres d'une matrice $kI$, $I$ étant la matrice identité. 
@@ -67,7 +60,7 @@ en optimisation.
     de $M$ sont les scalaires $\lambda$ tels que $\det{(M - \lambda I)} = 0$. 
   \item On suppose maintenant que $M$ est une matrice $2 \times 2$. Montrez que
     les valeurs propres de $M$ sont les solutions de l'équation
-    $\lambda^2 - \lambda\text{Trace}(M) + \det{(M)} = 0$.
+    \[ \lambda^2 - \lambda \ \text{trace} \ (M) + \det{(M)} = 0.\]
   \item On suppose maintenant que $M$ est symétrique.
     Montrez que ses valeurs propres sont réelles. 
   \end{enumerate}
@@ -104,7 +97,7 @@ en optimisation.
   (Si $b=0$ et $a=d$, on retrouve le résultat 1.)
 \end{solution}
 
-\section{Conditions d'optimalité}
+\section{Conditions d'optimalité locales et globale}
 \label{sec:opt-loc}
 
 \begin{exercice}
@@ -122,65 +115,70 @@ en optimisation.
   au point considéré, ici $x=0$. 
   
   \[
-  \begin{array}{c|c|c}
-    f & f' & f'' \\ \hline
-    x & 1  & 0   \\
-    x^2 & 2x & 2 \\
-    -x^2 & -2x & -2 \\
-    x^3 & 3x^2 & 6x 
+  \begin{array}{c|c|c|c|c}
+    f & f' & f'' & f'(0) = 0? & f''(0) > 0? \\ \hline
+    x & 1  & 0 & \text{non} & \text{non}  \\
+    x^2 & 2x & 2 & \text{oui} & \text{oui}\\
+    -x^2 & -2x & -2 & \text{oui} & \text{non} \\
+    x^3 & 3x^2 & 6x & \text{oui} & \text{non}
   \end{array}
   \]
   La première condition n'est pas vérifiée dans le premier cas. Dans les trois suivants si.
-  La seconde condition n'est vérifiée que dans le deuxième cas, où $0$ est bien minimum local
+  La seconde condition n'est vérifiée que dans le deuxième cas, où $0$ est donc minimum local
   (et même un minimum global).
   %Dans les cas 3 et 4, $0$ est respectivement est maximum et un point d'inflexion. 
 \end{solution}
 
 \begin{exercice}
-  Même exercice que précédemment en considérant au point $(0,0)$
+  Même exercice que précédemment en considérant 
   les fonctions à deux variables  $x_1^2 + x_2^2$, $-x_1^2 -x_2^2$,
-  $x_1^2 -x_2^2$, $x_1^2 + x_2$, $x_1^3 - 3x_1x_2^2$.  
+  $x_1^2 -x_2^2$, $x_1^2 + x_2$, $x_1^3 - 3x_1x_2^2$
+  pour $x_1 = 0, x_2 = 0$.  
 \end{exercice}
 
 \begin{solution}
   \[
-  \begin{array}{c|c|c}
-    f & \nabla f & H \\ \hline
-    x_1^2 + x_2^2 & (2x_1,2x_2)  & \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}   \\
-    -x_1^2 - x_2^2 & (-2x_1,-2x_2) & \begin{pmatrix} -2 & 0 \\ 0 & -2 \end{pmatrix} \\
-    x_1^2 - x_2^2 & (2x_1,-2x_2) & \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix} \\
-    x_1^2 + x_2 & (2x_1,1) & \begin{pmatrix} 2 & 0 \\ 0 & 0 \end{pmatrix} \\
-    x_1^3 - 3x_1x_2^2 & (3x_1^2 - 3x_2^2, 6x_1x_2) & \begin{pmatrix} 6x_1 & -6x_2 \\ -6x_2 & -6x_1 \end{pmatrix}
+  \begin{array}{c|c|c|c|c}
+    f & {\nabla f} & H_f & {\nabla f}(\vec{0}) = \vec{0}? & \text{type $H_f$} \\ \hline
+    x_1^2 + x_2^2 & (2x_1,2x_2)  & \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix} & \text{oui} & \text{def.pos.}  \\
+    -x_1^2 - x_2^2 & (-2x_1,-2x_2) & \begin{pmatrix} -2 & 0 \\ 0 & -2 \end{pmatrix} & \text{oui} & \text{def.neg.}\\
+    x_1^2 - x_2^2 & (2x_1,-2x_2) & \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix} & \text{oui} & \text{indef.} \\
+    x_1^3 - 3x_1x_2^2 & (3x_1^2 - 3x_2^2, 6x_1x_2) & \begin{pmatrix} 6x_1 & -6x_2 \\ -6x_2 & -6x_1 \end{pmatrix} & \text{oui} & \text{nul}
   \end{array}
-  \]\end{solution}
+  \]
 
-\section{qsdfsdf}
-\label{sec:qsds}
+  La condition de stationnarité est vérifiée dans tous les cas. 
+  La condition sur le hessien n'est vérifiée qu'en première ligne, où $\vec{0}$ est donc un minimum
+  local (et même global).
+
+  En ligne 3, on trouve facilement les valeurs propres, comme les racines
+  de $\lambda^2 - \lambda \ \text{trace} \ (H_f) + \det{(H_f)}$ : $2,-2$ (point selle). 
+\end{solution}
 
 \begin{exercice}
-  Soit la fonction suivante: $f(x_1,x_2) = ax_1^2 + bx_1 + c + d2x_2^2 + ex_2 + f$.
+  Soit la fonction suivante: $f(x_1,x_2) = 3x_1^2 + 2x_2 + 1$.
   \begin{enumerate}
-  \item Calculez le gradient et le hessien de $f$. %1
-  \item Est-ce que $f$ est convexe ? %0.5
-  \item Donnez le minimum global. %1
+  \item Calculez le gradient et le hessien de $f$. 
+  \item Est-ce que $f$ est convexe ?
+  \item Expliquez pourquoi trouver $x_1,x_2$ qui minimisent $f$
+    est un problème non borné.
   \end{enumerate}
 \end{exercice}
 
-%% Soit la fonction suivante :  $f(x_1,x_2) = 2x_1x_2 + 2x_2 - x_1^2 -2x_2^2$. 
-%%     \begin{enumerate}
-%%     \item Calculez le gradient et le hessien de $f$. 
-%%     \item Qu'en est-il de la convexité de $f$ ? (Note: les valeurs propres d'une matrice $M$ $2\times2$
-%%       sont les racines du polynômes $\lambda^2 - \text{trace}(M) \lambda + \text{det}(M)$). 
-%%     \item On applique la méthode de la descente de gradient en partant du point de coordonnées $(1,1)$.
-%%       Quel point obtient-on en se déplaçant d'un vecteur correspondant à l'opposé du gradient de $f$ en $(1,1)$ ?
-%%     \end{enumerate}
+\begin{solution}
+  $\nabla f(x_1,x_2) = (6x_1 + 2, 2)$ et $H_f(x_1,x_2) = \begin{pmatrix} 6 & 0 \\ 0 & 0 \end{pmatrix}$.
+  Ses valeurs propres sont $6$ et $0$. C'est une matrice semi-définie positive. D'après le théorème de
+  convexité, $f$ est convexe. Le minimum global, s'il existe, annule le gradient. Mais le gradient ne
+  peut être annulé (la deuxième composante est la constante $2$). Le problème de minimisation est
+  en effet non borné car $f(x_1,x_2) \rightarrow \infty$ quand $x_2 \rightarrow \infty$.   
+\end{solution}
 
 \section{Optimisation sous contrainte}
 \label{sec:kkt}
 
 \begin{exercice}
   \label{ex:ex}
-  Considérons les 4 propositions suivantes :
+  Considérons les quatre propositions suivantes :
   \begin{itemize}
   \item[(a)] Le problème est infaisable,
   \item[(b)] Le problème est non borné,
@@ -192,100 +190,63 @@ en optimisation.
   \item[(d)] Les solutions optimales se trouvent sur une arête du bord de $X$.
   \end{itemize}
   
-  Considérons également les 4 problèmes suivants :
-  %(b) non borné
-  \[
-  \text{(P1)}
-  \left\{
-  \begin{array}{c}
-    \min_{x_1,x_2} \ -x_1 - x_2 - 1 \ \text{tel que :} \\
-    \begin{array}{ll}
-      -x_1 \leq 0 \\
-      -x_2 \leq 0 \\
-    \end{array} 
-  \end{array}
-  \right.
-  \]
-  %(a) infaisable
-  \[
-  \text{(P2)}
-  \left\{
-  \begin{array}{c}
-    \min_{x_1,x_2} \ x_1 \ \text{tel que :} \\
-    \begin{array}{ll}
-      -x_1 \leq 0 \\
-      -x_2 \leq 0 \\
-      x_1 + x_2 + 1 \leq 0 \\
-    \end{array} 
-  \end{array}
-  \right.
-  \]
-  %arete
-  \[
-  \text{(P3)}
-  \left\{
-  \begin{array}{c}
-    \min_{x_1,x_2} \ x_1 \ \text{tel que :} \\
-    \begin{array}{ll}
-      -x_1 \leq 0 \\
-      -x_2 \leq 0 \\
-      x_1 + x_2 - 1 \leq 0 \\
-    \end{array} 
-  \end{array}
-  \right.
-  \]
-  %sommet
-  \[
-  \text{(P4)}
-  \left\{
-  \begin{array}{c}
-    \min_{x_1,x_2} \ -x_1+x_2 \ \text{tel que :} \\
-    \begin{array}{ll}
-      -x_1 \leq 0 \\
-      -x_2 \leq 0 \\
-      x_1 + x_2 - 1 \leq 0 \\
-    \end{array} 
-  \end{array}
-  \right.
-  \]
-
+  Considérons également les 4 problèmes suivants : trouver $x_1,x_2 \in \R$ qui minimisent 
+  \begin{itemize}
+    \item[(P1)] $-x_1 - x_2 - 1$ et vérifient $x_1,x_2 \geq 0$,   %(b) non borné
+    \item[(P2)] $x_1$ et vérifient $x_1,x_2 \geq 0$, $x_1 + x_2 + 1 \leq 0$, %(a) infaisable
+    \item[(P3)] $x_1$ et vérifient $x_1,x_2 \geq 0$, $x_1 + x_2 - 1 \leq 0$, %arete
+    \item[(P4)] $-x_1+x_2$ et vérifient $x_1,x_2 \geq 0$, $x_1 + x_2 - 1 \leq 0$. %sommet
+  \end{itemize}
+  
   Donnez la correspondance entre les 4 propositions et les 4 problèmes
   à l'aide de représentations graphiques.
 \end{exercice}
 
 \begin{exercice}
-  Nous considérons maintenant plus généralement le problème (PL) défini
-  en introduction. 
+  On considère maintenant plus généralement un problème d'optimisation linéaire. 
+  On note $X$ l'ensemble des solutions candidates vérifiant les contraintes et
+  on suppose que la fonction objectif $f$ n'est pas constante. Montrez par
+  contradiction et en utilisant les conditions KKT qu'une solution optimale 
+  ne peut appartenir à l'intérieur de $X$.
+\end{exercice}
+
+\begin{solution}
+  Si $x \in X \setminus \partial X$, par définition aucune contrainte n'est saturée,
+  ce qui implique que tous les coefficients $\lambda_i$ sont nuls. La condition
+  se simplifie en ${\nabla f}(x) = 0$, ce qui est faux pour $f$ linéaire et non constante.
+\end{solution}
+
+\begin{exercice}
+  Soit le problème suivant : trouver $x_1, x_2 \in \R$ qui minimisent $x_1^2 + x_2^2$
+  sous la contrainte $ax_1 + bx_2 + c \leq 0$. 
+
   \begin{enumerate}
-  \item Est-ce que l'hypothèse de qualification des contraintes est vérifiée
-    pour tout $x$ ? Quelle partie du cours permet de répondre à cette question ?
-  \item On note $X$ l'ensemble des solutions candidates vérifiant
-    les contraintes et on suppose que $f$ n'est pas constante. Montrez par contradiction et
-    en utilisant les conditions de Kuhn et Tucker qu'une solution optimale de (PL)
-    ne peut appartenir à l'intérieur de $X$.
+  \item Donnez une interprétation géométrique du problème. Expliquez pourquoi il y a deux
+    cas différents à traiter. 
+  \item En utilisant les conditions KKT, donnez la solution du problème dans les deux cas.  
   \end{enumerate}
 \end{exercice}
 
+\begin{solution}
+  Les lignes de niveau de la fonction $f(x_1,x_2) = x_1^2 + x_2^2$, c'est-à-dire
+  les points $(x_1,x_2)$ vérifiant $f(x_1,x_2) = r$ sont des cercles centrés en $(0,0)$. 
+  La contrainte est une inégalité affine, ce qui correspond à un demi-plan.
 
-\begin{exercice}
-Soit le problème suivant :
-    \[
-    \left\{
-    \begin{array}{c}
-      \min_{x,y} \ x^2 + y^2 \ \text{tel que :} \\
-      ax + by + c \leq 0 \\
-      x,y \in \mathbb{R} \\
-    \end{array}
-    \right. 
-    \]
-    \begin{enumerate}
-    \item Indiquez clairement le nombre d'inconnus, la fonction objectif et les contraintes.
-    \item Donnez une interprétation géométrique du problème. Expliquez pourquoi il y a deux
-      cas différents à traiter. 
-    \item Rappelez les conditions de Kuhn et Tucker et expliquez pourquoi elles peuvent
-      s'appliquer à ce problème. Déduisez-en la solution du problème dans les deux cas.  
-    \end{enumerate}
-\end{exercice}
+  Remarquons que sans contrainte, le minimum est évidemment le centre, en $(0,0)$.
+  C'est également le cas, si $(0,0)$ respecte la contrainte. Il peut en être autrement
+  que si $(0,0)$ ne respecte pas la contrainte. 
+  
+  Comme il n'y a qu'une contrainte, les conditions KKT impliquent deux cas :
+  \begin{itemize}
+  \item soit aucune contrainte n'est saturée. Dans ce cas, le minimum annule
+    le gradient $\nabla f(x_1,x_2) = (2x_1,2x_2)$: c'est $(0,0)$ (cohérent avec notre remarque). 
+  \item soit une contrainte est saturée. Dans ce cas, le minimum vérifie
+    \[ ax_1+bx_2+c = 0, \quad \text{et} \quad (2x_1,2x_2) = \lambda(a,b). \]
+    C'est un système de trois équations à trois inconnues ($x_1, x_2,\lambda$).
+    On obtient
+    \[ x_1 = \lambda a, \quad x_2 = \lambda b, \quad \lambda = \frac{-2c}{a^2+b^2}. \]
+  \end{itemize}
+\end{solution}
 
 %% \begin{exercice}
 %%   Soient $g_1(x_1,x_2) = 10x_1 + 12x_2 - 59$, $g_2(x_1,x_2) = -x_1$, $g_3(x_1,x_2) = -x_2$.
@@ -301,6 +262,24 @@ Soit le problème suivant :
 %%       montrez que la solution du problème est le point $(x_1^\star,x_2^\star)$ où $g_1$ et $g_3$ sont saturées.   
 %%     \end{enumerate}
 %% \end{exercice}
+
+%% Soit la fonction suivante :  $f(x_1,x_2) = 2x_1x_2 + 2x_2 - x_1^2 -2x_2^2$. 
+%%     \begin{enumerate}
+%%     \item Calculez le gradient et le hessien de $f$. 
+%%     \item Qu'en est-il de la convexité de $f$ ? (Note: les valeurs propres d'une matrice $M$ $2\times2$
+%%       sont les racines du polynômes $\lambda^2 - \text{trace}(M) \lambda + \text{det}(M)$). 
+%%     \item On applique la méthode de la descente de gradient en partant du point de coordonnées $(1,1)$.
+%%       Quel point obtient-on en se déplaçant d'un vecteur correspondant à l'opposé du gradient de $f$ en $(1,1)$ ?
+%%     \end{enumerate}
+
+%% \begin{exercice}
+%%   Soit $\vec{a} = (a_1,\dots,a_d) \in \R^d$.
+%%   \begin{itemize}
+%%   \item  Calculez le gradient de la fonction $f(\vec{x}) = \vex{x}\cdot\vec{a}$.  
+%%   \item  Calculez le gradient de la fonction $f(\vec{x}) = (\vex{x}\cdot\vec{a})^2$.  
+%%   \end{itemize}
+%% \end{exercice}
+
 
 \end{document}
 

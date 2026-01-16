@@ -30,7 +30,7 @@
 \newtheorem*{solution}{Solution}
 
 \usepackage{comment}
-\excludecomment{solution}% commenter/décommenter pour afficher/effacer l'impression des solutions
+%\excludecomment{solution}% commenter/décommenter pour afficher/effacer l'impression des solutions
 
 
 \title{Régression et optimisation sans contrainte}
@@ -163,18 +163,23 @@ Par la suite, nous allons continuer à travailler dans $\R^{d+1}$,
 mais en omettant les primes pour plus de clarté. 
 
 \begin{exercice}
-  Calculez le gradient de la fonction de perte :
-  \[ L(\vec{w}) = \sum_{i=1}^{n} (y_i - \hat{y}_i)^2, \]
-  et déduisez-en une manière de la minimiser par descente de gradient.
+  Calculez le gradient de la fonction de perte
+  \footnote{Pour vous aider :
+  le gradient de $f(\vec{w}) = \vec{w}\cdot\vec{x}$ est $\nabla f(\vec{w}) = \vec{x}$
+  et le gradient de $g(\vec{w}) = (\vec{w}\cdot\vec{x})^2$ est
+  $\nabla g(\vec{w}) = 2(\vec{w}\cdot\vec{x})\vec{x}$} :
+  \[ L(\vec{w}) := \sum_{i=1}^{n} (y_i - \hat{y}_i)
+  = \sum_{i=1}^{n} (y_i - \vec{w}\cdot\vec{x}_i)^2, \]
+  et déduisez-en une manière de la minimiser. 
 \end{exercice}
 
 \begin{solution}
   En développant, on a
   \[ L(\vec{w}) = \sum_{i=1}^{n} ( y_i^2 - 2\vec{w} \cdot \vec{x}_i + (\vec{w} \cdot \vec{x}_i)^2 ), \]
   D'où
-  \[ \grad L(\vec{w}) = \sum_{i=1}^{n} ( 2\vec{x}_i + 2(\vec{w} \cdot \vec{x}_i)\vec{x}_i ). \]
+  \[ \nabla L(\vec{w}) = \sum_{i=1}^{n} ( 2\vec{x}_i + 2(\vec{w} \cdot \vec{x}_i)\vec{x}_i ). \]
   Equation d'évolution :
-  \[ \vec{w} = \vec{w} - \lambda \grad L(\vec{w}). \]
+  \[ \vec{w} = \vec{w} - \lambda \nabla L(\vec{w}). \]
 \end{solution}
 
 Bien sûr, si la variable à expliquer n'est en réalité pas reliée

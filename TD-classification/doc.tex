@@ -156,26 +156,33 @@ ou au cas où les données sont non-linéairement séparables.}
 qui ont de meilleurs capacités de généralisation que le perceptron 
 parce qu'ils maximisent la marge de séparation.
 
-%% Tandis que nous avons
-%% considéré une distance $l_\infty$ pour maximiser la marge de séparation
-%% dans (P), les SVMs considèrent en général la distance euclidienne $l_2$,
-%% ce qui aboutit un problème d'optimisation quadratique. 
-
-Si les données sont linéairement séparables,
-il existe un réel $\epsilon > 0$ telle que
-\[  \forall i, y_i(\vec{w} \cdot \vec{x}_i) \geq \epsilon. \] 
-
-La largeur de la marge de séparation est égale à $2 \epsilon / \|\vec{w}\|$.
-
 \begin{exercice}
-  Expliquez pourquoi on doit poser que $\epsilon = 1$ pour que la maximisation
-  de la marge de séparation soit un problème borné. 
-\end{exercice}
-
-On considère maintenant le problème :
+  D'après ce qu'on a vu précédemment, le classifieur ne fait pas d'erreur
+  si $\forall i, y_i(\vec{w}\cdot\vec{x}_i) > 0$. Pour maximiser la marge de
+  séparation on peut donc considèrer le problème :
 %
 \[
 \text{(P)}
+\left\{
+\begin{array}{ll}
+  \text{trouver} \ \vec{w} \in \R^{d+1} \ \text{qui maximise} \ \min_i y_i(\vec{w} \cdot \vec{x}_i)
+  \ \text{tel que} & \\
+  \forall i \in \{1,\dots,n\}, \ y_i(\vec{w} \cdot \vec{x}_i) > 0. 
+\end{array}
+\right.
+\]
+Montrer que la fonction objectif peut atteindre des valeurs arbitrairement grandes,
+c'est-à-dire que le problème est non borné. 
+\end{exercice}
+
+\begin{exercice}
+  Si les données sont linéairement séparables, il existe une direction $\vec{w}$ et
+  une marge de séparation d'épaisseur $\epsilon_{\vec{w}} > 0$ telle que
+\[  \forall i, \frac{y_i(\vec{w} \cdot \vec{x}_i)}{\|\vec{w}\|} \geq \epsilon_{\vec{w}}. \] 
+
+Expliquez comment on obtient le problème suivant en posant $\epsilon_{\vec{w}} \|\vec{w}\| = 1$ :
+\[
+\text{(P')}
 \left\{
 \begin{array}{ll}
   \text{trouver} \ \vec{w} \in \R^{d+1} \ \text{qui minimise} \ \|\vec{w}\|^2 \ \text{tel que} & \\
@@ -183,19 +190,17 @@ On considère maintenant le problème :
 \end{array}
 \right.
 \]
-
-\begin{exercice}
-  ~
-  
-  \begin{enumerate}
+%
+\begin{enumerate}
   \item Donnez la dimension du problème, la fonction objectif,
     le nombre de contraintes, qualifiez les contraintes.
-    Comment appelle-t-on se type de problème ?
+    Comment appelle-t-on ce type de problème ?
   \item Expliquez pourquoi, quand on a une solution $\vec{w}$
     de (P) on obtient bien un classifieur sans erreur sur l'ensemble
     d'apprentissage et qui maximise la marge de séparation.   
   \end{enumerate}
 \end{exercice}
+
 
 \begin{exercice}
   Téléchargez le code fourni. Il utilise \verb!CVXPY! pour résoudre le problème

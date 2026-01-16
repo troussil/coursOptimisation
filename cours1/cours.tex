@@ -65,6 +65,23 @@
   \titlepage
 \end{frame}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% TODO pour la prochaine
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Au début, il faut donner des exemples qui donnent les intuitions pour comprendre les généralités
+%% - ce qu'est une contrainte
+%% - nb de contraintes grand
+%% - une sol candidate, une sol min
+%% -> + petit cercle englobant ?
+%% - infaisable/non borne/+sol
+%% -> separation par une droite ?
+%% - nb d'inconnues (dim) grand
+%% - non analytiquement connu ?
+%% - f/gi quelconque, non convexes ?
+%% - cas discret ?
+
+%% definition precise d'un problème non borne
+
 % ----------------------------------------------------------------------
 \section{Introduction}
 % ----------------------------------------------------------------------
@@ -374,13 +391,13 @@
     \begin{itemize}
     \item Le signe de $f'(x^0)$ indique comment évolue $f$ autour de $x^0$: 
       \begin{itemize}
-      \item \alert<1-2>{si $f'(x^0) < 0$, $f$ $\downarrow$ quand $x^0$ $\uparrow$},
-      \item si $f'(x^0) > 0$, $f$ $\uparrow$ quand $x^0$ $\uparrow$,
+      \item \alert<1-2>{si $f'(x^0) < 0$, $f$ $\downarrow$ quand $x$ $\uparrow$},
+      \item si $f'(x^0) > 0$, $f$ $\uparrow$ quand $x$ $\uparrow$,
       \end{itemize}
     \item La valeur absolue donne la \emph{vitesse} du changement. 
-      \begin{itemize}
-      \item \alert<3>{si $f'(x^0) = 0$, $f$ change \emph{peu} autour de $x^0$}. 
-      \end{itemize}
+      %% \begin{itemize}
+      %% \item \alert<3>{si $f'(x^0) = 0$, $f$ change \emph{peu} autour de $x^0$}. 
+      %% \end{itemize}
     \end{itemize}
   \end{block}
   
@@ -398,16 +415,16 @@
     \begin{itemize}
     \item Le signe de $f''(x^0)$ indique comment évolue $f'$ autour de $x^0$. 
       \begin{itemize}
-      \item si $f''(x^0) < 0$, $f'$ $\downarrow$ quand $x^0$ $\uparrow$,
-      \item si $f''(x^0) > 0$, $f'$ $\uparrow$ quand $x^0$ $\uparrow$,
+      \item si $f''(x^0) < 0$, $f'$ $\downarrow$ quand $x$ $\uparrow$,
+      \item si $f''(x^0) > 0$, $f'$ $\uparrow$ quand $x$ $\uparrow$,
       \end{itemize}
     \end{itemize}
   \end{block}
 
   \begin{block}{En particulier, si $f'(x^0) = 0$ et $f''(x^0) > 0$, alors}
     \begin{itemize}
-      \item $f'$ $\uparrow$ (donc $f'$ positive et $f$ $\uparrow$) quand $x^0$ $\uparrow$,
-      \item $f'$ $\downarrow$ (donc $f'$ négative et $f$ $\downarrow$) quand $x^0$ $\downarrow$. 
+      \item $f'$ $\uparrow$ (donc $f'$ positive, donc $f$ $\uparrow$) quand $x$ $\uparrow$,
+      \item $f'$ $\downarrow$ (donc $f'$ négative, donc $f$ $\downarrow$) quand $x$ $\downarrow$. 
     \end{itemize}
     \alert<2->{En quoi cela peut nous aider à trouver $x^\star$ qui minimise $f$ ?}
   \end{block}
@@ -526,13 +543,14 @@
   \frametitle{Différentiabilité et convexité}
 
   \begin{block}{Théorème de convexité}
-    Si $f$ est continûment différentiable (deux fois), les conditions suivantes sont équivalentes:
+    Si $f$ est continûment différentiable (deux fois) en tout $x \in \R^n$,
+    les conditions suivantes sont équivalentes:
     \begin{enumerate}
     \item $f$ est convexe,
     %%\item $\forall x, y, \ f(y) > f(x) + {\nabla f} ^T(x) \cdot (y - x)$,
     \item $\forall x$, le hessien $\nabla^2f(x)$ est une matrice \emph{semi-définie positive}
 
-      (ou $\forall x$, $f''(x) \geq 0$ en une dimension).
+      (ou $\forall x$, $f''(x) \geq 0$ quand $n = 1$).
     \end{enumerate}
   \end{block}
 
@@ -582,7 +600,9 @@
   \only<1>{
   \begin{block}{Théorème d'optimalité globale (avec différentiabilité)}
     Soit $f$ convexe et continûment différentiable en tout $x \in \R^n$.
-    $x^\star$ est un optimum global ssi ${\nabla f}(x^\star) = 0$.
+    $x^\star$ est un optimum global ssi ${\nabla f}(x^\star) = 0$
+    (ou $f'(x^\star) = 0$ quand $n = 1$).
+
   \end{block}
   }
   \only<2>{
@@ -952,7 +972,7 @@
       \item $\mat{M}_2$ de taille $1 \times k$.
     \end{itemize}
     
-    \[ L(\mat{M}_1, \mat{M}_2, \mat{x}) := \mat{M}_2 \cdot \sigma ( \mat{M}_1 \cdot \mat{x} ). \]
+    \[ f(\mat{M}_1, \mat{M}_2)(\mat{x}) := \mat{M}_2 \cdot \sigma ( \mat{M}_1 \cdot \mat{x} ). \]
     où $\sigma$ est une fonction d'activation non polynomiale appliquée
     élément par élément (ex. sigmoïde). 
   \end{block}
@@ -964,26 +984,27 @@
 
 \end{frame}
 
-% ----------------------------------------------------------------------
-\begin{frame}
-  \frametitle{Gradient ?}
+%% TODO
+%% % ----------------------------------------------------------------------
+%% \begin{frame}
+%%   \frametitle{Gradient ?}
 
-  \begin{itemize}
-  \item (immédiat ;-)) $\frac{\partial L}{\partial \mat{M}_2}(\mat{M}_1, \mat{M}_2, \mat{x})
-    = \sigma ( \mat{x}^T \cdot \mat{M}_1^T )$
-  \item (composition) on pose $\mat{z}:=\mat{M}_1\mat{x}$, $\mat{y}:=\sigma(\mat{z})$,
-    \begin{align*}
-    \frac{\partial L}{\partial \mat{M}_1}(\mat{M}_1, \mat{M}_2, \mat{x})
-    &= \mat{M_2} \Bigg( \frac{\partial \mat{y}}{\partial \mat{z}} \frac{\partial \mat{z}}{\partial \mat{M}_1} \Bigg) \\
-    &= \mat{M_2} \sigma'( \mat{M}_1 \cdot \mat{x} ) \mat{x}^T.
-    \end{align*}
-  \end{itemize}
+%%   \begin{itemize}
+%%   \item (immédiat ;-)) $\frac{\partial L}{\partial \mat{M}_2}(\mat{M}_1, \mat{M}_2, \mat{x})
+%%     = \sigma ( \mat{x}^T \cdot \mat{M}_1^T )$
+%%   \item (composition) on pose $\mat{z}:=\mat{M}_1\mat{x}$, $\mat{y}:=\sigma(\mat{z})$,
+%%     \begin{align*}
+%%     \frac{\partial L}{\partial \mat{M}_1}(\mat{M}_1, \mat{M}_2, \mat{x})
+%%     &= \mat{M_2} \Bigg( \frac{\partial \mat{y}}{\partial \mat{z}} \frac{\partial \mat{z}}{\partial \mat{M}_1} \Bigg) \\
+%%     &= \mat{M_2} \sigma'( \mat{M}_1 \cdot \mat{x} ) \mat{x}^T.
+%%     \end{align*}
+%%   \end{itemize}
 
-  astuce : formulaire de dérivées matricielles.
+%%   astuce : formulaire de dérivées matricielles.
 
-  mieux : outils de dérivation automatique comme \verb!PyTorch!.
+%%   mieux : outils de dérivation automatique comme \verb!PyTorch!.
   
-\end{frame}
+%% \end{frame}
 
 % ----------------------------------------------------------------------
 \begin{frame}

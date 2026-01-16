@@ -30,7 +30,7 @@
 \newtheorem*{solution}{Solution}
 
 \usepackage{comment}
-\excludecomment{solution}% commenter/décommenter pour afficher/effacer l'impression des solutions
+%\excludecomment{solution}% commenter/décommenter pour afficher/effacer l'impression des solutions
 
 
 \title{Optimisation continue}
@@ -57,19 +57,52 @@ en optimisation.
 %% \end{exercice}
 
 \begin{exercice}
-  Par définition, un vecteur propre $x$ d'une matrice carrée $M$, et sa valeur propre
-  associée $\lambda$, vérifient $Mx = \lambda x$.
+  Par définition, un vecteur propre $\vec{x}$ d'une matrice carrée $M$, et sa valeur propre
+  associée $\lambda$, vérifient $M\vec{x} = \lambda \vec{x}$.
 
-  \begin{itemize}
-  \item Sachant qu'un système linéaire
-    $Ax = b$ a une solution si et seuelement si , montrez que les valeurs propres
+  \begin{enumerate}
+  \item Donnez les valeurs propres d'une matrice $kI$, $I$ étant la matrice identité. 
+  \item Sachant qu'un système d'équations linéaires homogène $A\vec{x} = \vec{0}$ admet des
+    solutions non triviales si et seulement si $\det{A} = 0$, montrez que les valeurs propres
     de $M$ sont les scalaires $\lambda$ tels que $\det{(M - \lambda I)} = 0$. 
   \item On suppose maintenant que $M$ est une matrice $2 \times 2$. Montrez que
     les valeurs propres de $M$ sont les solutions de l'équation
-    $\lambda^2 - \lambda\text{Trace}(M) + \det{(M)}$. 
-  \end{itemize}
+    $\lambda^2 - \lambda\text{Trace}(M) + \det{(M)} = 0$.
+  \item On suppose maintenant que $M$ est symétrique.
+    Montrez que ses valeurs propres sont réelles. 
+  \end{enumerate}
   
 \end{exercice}
+
+\begin{solution}
+  1. Pour tout $\vec{x}$, on a $kI\vec{x} = k \vec{x}$. Par définition $k = \lambda$
+  est la valeur propre de $kI$ associée à tout $\vec{x}$. 
+  
+  2. A partir de  $M\vec{x} = \lambda \vec{x}$, en retranchant $\lambda \vec{x}$ et en mettant
+  $\vec{x}$ en facteur on obtient $(M - \lambda I) \vec{x} = 0$. C'est un système
+  d'équations linéaires homogène. Une solution triviale est $\vec{x} = \vec{0}$.
+  Il y a d'autres solutions ssi $\det{(M - \lambda I)} = 0$. 
+
+  3. En posant $M = \begin{pmatrix} a & b \\ c & d \end{pmatrix}$, on a :
+  \begin{align*}
+    \det{(M - \lambda I)} &=
+    (a-\lambda)(d - \lambda) - cb \\
+    &= ad - a\lambda - d\lambda + \lambda^2 - cb \\
+    &= \lambda^2 - \lambda(a+d) + (ad -cb).
+  \end{align*}
+
+  4. Le discriminant du polynôme de second degré est $(a+d)^2 - 4(ad-cb)$.
+  Mais en posant $c=b$ (symétrie), on déduit que
+  \begin{align*}
+    (a+d)^2 - 4(ad-b^2) &=
+    a^2 + d^2 + 2ad - 4ad + 4b^2 \\
+    &= a^2 + d^2 - 2ad + 4b^2 \\
+    &= (a-d)^2 + 4b^2 \geq 0.
+  \end{align*}
+  Comme le discriminant est positif, le polynôme possède des racines réelles :
+  \[ \lambda = \frac{(a+d) \pm \sqrt{\big( (a-d)^2 + 4b^2 \big)}}{2}. \]
+  (Si $b=0$ et $a=d$, on retrouve le résultat 1.)
+\end{solution}
 
 \section{Conditions d'optimalité}
 \label{sec:opt-loc}
@@ -81,15 +114,45 @@ en optimisation.
 \end{exercice}
 
 \begin{solution}
+  Les deux conditions sont :
+  \begin{enumerate}
+  \item le gradient est nul 
+  \item le hessien est une matrice définie positive (valeurs propres $>$ 0)
+  \end{enumerate}
+  au point considéré, ici $x=0$. 
+  
+  \[
+  \begin{array}{c|c|c}
+    f & f' & f'' \\ \hline
+    x & 1  & 0   \\
+    x^2 & 2x & 2 \\
+    -x^2 & -2x & -2 \\
+    x^3 & 3x^2 & 6x 
+  \end{array}
+  \]
+  La première condition n'est pas vérifiée dans le premier cas. Dans les trois suivants si.
+  La seconde condition n'est vérifiée que dans le deuxième cas, où $0$ est bien minimum local
+  (et même un minimum global).
+  %Dans les cas 3 et 4, $0$ est respectivement est maximum et un point d'inflexion. 
 \end{solution}
 
 \begin{exercice}
-  Même question que précédemment en considérant des fonctions à deux variables :
-  $x_1^2 + x_2^2$, $-x_1^2 -x_2^2$, $x_1^2 -x_2^2$, $x_1^2 + x_2$, $x_1^3 - 3x_1x_2^2$.  
+  Même exercice que précédemment en considérant au point $(0,0)$
+  les fonctions à deux variables  $x_1^2 + x_2^2$, $-x_1^2 -x_2^2$,
+  $x_1^2 -x_2^2$, $x_1^2 + x_2$, $x_1^3 - 3x_1x_2^2$.  
 \end{exercice}
 
 \begin{solution}
-\end{solution}
+  \[
+  \begin{array}{c|c|c}
+    f & \nabla f & H \\ \hline
+    x_1^2 + x_2^2 & (2x_1,2x_2)  & \begin{pmatrix} 2 & 0 \\ 0 & 2 \end{pmatrix}   \\
+    -x_1^2 - x_2^2 & (-2x_1,-2x_2) & \begin{pmatrix} -2 & 0 \\ 0 & -2 \end{pmatrix} \\
+    x_1^2 - x_2^2 & (2x_1,-2x_2) & \begin{pmatrix} 2 & 0 \\ 0 & -2 \end{pmatrix} \\
+    x_1^2 + x_2 & (2x_1,1) & \begin{pmatrix} 2 & 0 \\ 0 & 0 \end{pmatrix} \\
+    x_1^3 - 3x_1x_2^2 & (3x_1^2 - 3x_2^2, 6x_1x_2) & \begin{pmatrix} 6x_1 & -6x_2 \\ -6x_2 & -6x_1 \end{pmatrix}
+  \end{array}
+  \]\end{solution}
 
 \section{qsdfsdf}
 \label{sec:qsds}

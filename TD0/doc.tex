@@ -1,0 +1,244 @@
+\documentclass[a4paper,francais]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+\usepackage{subfig}
+\usepackage{graphicx}
+\graphicspath{{fig/}}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{cancel}
+
+\usepackage{hyperref}
+
+\usepackage{cprotect} %verbatim in footnote
+
+\usepackage[english,linesnumbered,ruled,vlined]{algorithm2e}
+
+\newcommand{\cad}{c.-à-d.}
+\newcommand{\Z}{{\ensuremath\mathbb{Z}}}
+\newcommand{\N}{{\ensuremath\mathbb{N}}}
+\newcommand{\R}{{\ensuremath\mathbb{R}}}
+\newtheorem{Theorem}{Theorem}
+
+%-------- enable or disable correction -----------------------------
+\theoremstyle{definition}
+\newtheorem{exercice}{Exercice}[section]
+\newtheorem*{solution}{Solution}
+
+\usepackage{comment}
+\excludecomment{solution}% commenter/décommenter pour afficher/effacer l'impression des solutions
+
+
+\title{Optimisation continue}
+\author{Tristan Roussillon}
+\date{fév. 2026}
+
+\begin{document}
+
+\maketitle
+
+Dans ce TD, l'objectif est de se familiariser
+avec quelques outils et résultats fondamentaux
+en optimisation.  
+
+\section{Prérequis : valeurs propres}
+\label{sec:calcul}
+
+%% \begin{exercice}
+%%   Soit $\vec{a} = (a_1,\dots,a_d) \in \R^d$.
+%%   \begin{itemize}
+%%   \item  Calculez le gradient de la fonction $f(\vec{x}) = \vex{x}\cdot\vec{a}$.  
+%%   \item  Calculez le gradient de la fonction $f(\vec{x}) = (\vex{x}\cdot\vec{a})^2$.  
+%%   \end{itemize}
+%% \end{exercice}
+
+\begin{exercice}
+  Par définition, un vecteur propre $x$ d'une matrice carrée $M$, et sa valeur propre
+  associée $\lambda$, vérifient $Mx = \lambda x$.
+
+  \begin{itemize}
+  \item Sachant qu'un système linéaire
+    $Ax = b$ a une solution si et seuelement si , montrez que les valeurs propres
+    de $M$ sont les scalaires $\lambda$ tels que $\det{(M - \lambda I)} = 0$. 
+  \item On suppose maintenant que $M$ est une matrice $2 \times 2$. Montrez que
+    les valeurs propres de $M$ sont les solutions de l'équation
+    $\lambda^2 - \lambda\text{Trace}(M) + \det{(M)}$. 
+  \end{itemize}
+  
+\end{exercice}
+
+\section{Conditions d'optimalité}
+\label{sec:opt-loc}
+
+\begin{exercice}
+  On considère successivement les fonctions $x$, $x^2$, $-x^2$ et $x^3$.
+  Pour chacune d'elles, indiquez si les deux conditions d'optimalité
+  locales sont satisfaites ou non en $0$.
+\end{exercice}
+
+\begin{solution}
+\end{solution}
+
+\begin{exercice}
+  Même question que précédemment en considérant des fonctions à deux variables :
+  $x_1^2 + x_2^2$, $-x_1^2 -x_2^2$, $x_1^2 -x_2^2$, $x_1^2 + x_2$, $x_1^3 - 3x_1x_2^2$.  
+\end{exercice}
+
+\begin{solution}
+\end{solution}
+
+\section{qsdfsdf}
+\label{sec:qsds}
+
+\begin{exercice}
+  Soit la fonction suivante: $f(x_1,x_2) = ax_1^2 + bx_1 + c + d2x_2^2 + ex_2 + f$.
+  \begin{enumerate}
+  \item Calculez le gradient et le hessien de $f$. %1
+  \item Est-ce que $f$ est convexe ? %0.5
+  \item Donnez le minimum global. %1
+  \end{enumerate}
+\end{exercice}
+
+%% Soit la fonction suivante :  $f(x_1,x_2) = 2x_1x_2 + 2x_2 - x_1^2 -2x_2^2$. 
+%%     \begin{enumerate}
+%%     \item Calculez le gradient et le hessien de $f$. 
+%%     \item Qu'en est-il de la convexité de $f$ ? (Note: les valeurs propres d'une matrice $M$ $2\times2$
+%%       sont les racines du polynômes $\lambda^2 - \text{trace}(M) \lambda + \text{det}(M)$). 
+%%     \item On applique la méthode de la descente de gradient en partant du point de coordonnées $(1,1)$.
+%%       Quel point obtient-on en se déplaçant d'un vecteur correspondant à l'opposé du gradient de $f$ en $(1,1)$ ?
+%%     \end{enumerate}
+
+\section{Optimisation sous contrainte}
+\label{sec:kkt}
+
+\begin{exercice}
+  \label{ex:ex}
+  Considérons les 4 propositions suivantes :
+  \begin{itemize}
+  \item[(a)] Le problème est infaisable,
+  \item[(b)] Le problème est non borné,
+  \end{itemize}
+  et, en notant $X$ l'ensemble des
+  solutions candidates vérifiant les contraintes,
+  \begin{itemize}
+  \item[(c)] La solution optimale se trouve sur un sommet du bord de $X$,
+  \item[(d)] Les solutions optimales se trouvent sur une arête du bord de $X$.
+  \end{itemize}
+  
+  Considérons également les 4 problèmes suivants :
+  %(b) non borné
+  \[
+  \text{(P1)}
+  \left\{
+  \begin{array}{c}
+    \min_{x_1,x_2} \ -x_1 - x_2 - 1 \ \text{tel que :} \\
+    \begin{array}{ll}
+      -x_1 \leq 0 \\
+      -x_2 \leq 0 \\
+    \end{array} 
+  \end{array}
+  \right.
+  \]
+  %(a) infaisable
+  \[
+  \text{(P2)}
+  \left\{
+  \begin{array}{c}
+    \min_{x_1,x_2} \ x_1 \ \text{tel que :} \\
+    \begin{array}{ll}
+      -x_1 \leq 0 \\
+      -x_2 \leq 0 \\
+      x_1 + x_2 + 1 \leq 0 \\
+    \end{array} 
+  \end{array}
+  \right.
+  \]
+  %arete
+  \[
+  \text{(P3)}
+  \left\{
+  \begin{array}{c}
+    \min_{x_1,x_2} \ x_1 \ \text{tel que :} \\
+    \begin{array}{ll}
+      -x_1 \leq 0 \\
+      -x_2 \leq 0 \\
+      x_1 + x_2 - 1 \leq 0 \\
+    \end{array} 
+  \end{array}
+  \right.
+  \]
+  %sommet
+  \[
+  \text{(P4)}
+  \left\{
+  \begin{array}{c}
+    \min_{x_1,x_2} \ -x_1+x_2 \ \text{tel que :} \\
+    \begin{array}{ll}
+      -x_1 \leq 0 \\
+      -x_2 \leq 0 \\
+      x_1 + x_2 - 1 \leq 0 \\
+    \end{array} 
+  \end{array}
+  \right.
+  \]
+
+  Donnez la correspondance entre les 4 propositions et les 4 problèmes
+  à l'aide de représentations graphiques.
+\end{exercice}
+
+\begin{exercice}
+  Nous considérons maintenant plus généralement le problème (PL) défini
+  en introduction. 
+  \begin{enumerate}
+  \item Est-ce que l'hypothèse de qualification des contraintes est vérifiée
+    pour tout $x$ ? Quelle partie du cours permet de répondre à cette question ?
+  \item On note $X$ l'ensemble des solutions candidates vérifiant
+    les contraintes et on suppose que $f$ n'est pas constante. Montrez par contradiction et
+    en utilisant les conditions de Kuhn et Tucker qu'une solution optimale de (PL)
+    ne peut appartenir à l'intérieur de $X$.
+  \end{enumerate}
+\end{exercice}
+
+
+\begin{exercice}
+Soit le problème suivant :
+    \[
+    \left\{
+    \begin{array}{c}
+      \min_{x,y} \ x^2 + y^2 \ \text{tel que :} \\
+      ax + by + c \leq 0 \\
+      x,y \in \mathbb{R} \\
+    \end{array}
+    \right. 
+    \]
+    \begin{enumerate}
+    \item Indiquez clairement le nombre d'inconnus, la fonction objectif et les contraintes.
+    \item Donnez une interprétation géométrique du problème. Expliquez pourquoi il y a deux
+      cas différents à traiter. 
+    \item Rappelez les conditions de Kuhn et Tucker et expliquez pourquoi elles peuvent
+      s'appliquer à ce problème. Déduisez-en la solution du problème dans les deux cas.  
+    \end{enumerate}
+\end{exercice}
+
+%% \begin{exercice}
+%%   Soient $g_1(x_1,x_2) = 10x_1 + 12x_2 - 59$, $g_2(x_1,x_2) = -x_1$, $g_3(x_1,x_2) = -x_2$.
+%%   On cherche $x_1,x_2 \in \mathbb{R}$ qui minimisent la fonction objectif $f(x_1,x_2) = -10x_1 -11x_2$
+%%   et tels que $\forall i \in \{1,\dots,3\}$, $g_i(x_1,x_2) \leq 0$. 
+%%     \begin{enumerate}
+%%     \item Indiquez clairement le nombre d'inconnus, la fonction objectif et les contraintes.
+%%     \item Comment s'appelle ce type de problème ? Citez deux algorithmes de résolution. 
+%%     \item Donnez une représentation graphique du problème. 
+%%     \item Rappelez les conditions de Kuhn et Tucker et indiquez pourquoi elles peuvent
+%%       s'appliquer à ce problème.
+%%     \item En utilisant les conditions de Kuhn et Tucker, ainsi que les gradients de $f$, $g_1$, $g_3$,
+%%       montrez que la solution du problème est le point $(x_1^\star,x_2^\star)$ où $g_1$ et $g_3$ sont saturées.   
+%%     \end{enumerate}
+%% \end{exercice}
+
+\end{document}
+
+

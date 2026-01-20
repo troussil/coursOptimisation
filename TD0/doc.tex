@@ -221,6 +221,10 @@ en optimisation.
   à l'aide de représentations graphiques.
 \end{exercice}
 
+\begin{solution}
+  (P1) (b), (P2) (a), (P3) (d), (P4) (c). 
+\end{solution}
+
 \begin{exercice}
   On considère maintenant plus généralement un problème d'optimisation linéaire. 
   On note $X$ l'ensemble des solutions candidates vérifiant les contraintes et
@@ -267,18 +271,44 @@ en optimisation.
   \end{itemize}
 \end{solution}
 
-\section{Pour aller plus loin: dérivation vectorielle/matricielle}
+\section{Bonus : dérivation vectorielle/matricielle}
 
 \begin{exercice}
-  Soient deux vecteurs constants $\vec{a} = (a_1,\dots,a_d) \in \R^d$ et
-  $\vec{b} = (b_1,\dots,b_d) \in \R^d$.
+  Soient un vecteur $\vec{a} = (a_1,\dots,a_d) \in \R^d$ et
+  un scalaire $s \in \R$.
   Calculez le gradient des fonctions:
   \begin{enumerate}
   \item $f(\vec{x}) = \vec{x}\cdot\vec{a}$,  
   \item $f(\vec{x}) = (\vec{x}\cdot\vec{a})^2$,
-  \item $f(\vec{x}) = (\vec{b} - \vec{x}\cdot\vec{a})^2$. 
+  \item $f(\vec{x}) = (s - \vec{x}\cdot\vec{a})^2$. 
   \end{enumerate}
 \end{exercice}
+
+\begin{solution}
+  La fonction $f$ est une fonction à $d$ variables : $f(\vec{x}) = f(x_1,\dots,x_d)$.
+  Le gradient est par définition le vecteur des dérivées partielles :
+  ${\nabla f}(x_1,\dots,x_d) = (\frac{\partial f}{\partial x_1}, \dots, \frac{\partial f}{\partial x_d})$.
+
+  1. Si on développe le produit scalaire $\vec{x}\cdot\vec{a} = \sum_{i=1}^dx_ia_i = x_1a_1 + \dots + x_da_d$,
+  on trouve facilement que
+  \[ \frac{\partial f}{\partial x_k} = \frac{\partial}{\partial x_1}(\sum_{i=1}^dx_ia_i) = a_k.\]
+  (la dérivée du produit $x_ia_i$ par rapport à $x_k$ est $0$ si $i\neqk$ et $a_k$ si $i=k$).
+  On conclut donc que ${\nabla f}(\vec{x}) = \vec{a}$. 
+
+  2. Encore une fois, on développe le produit scalaire
+  \begin{align*}
+    (\vec{x}\cdot\vec{a})^2 &= \big( \sum_{i=1}^dx_ia_i \big)\big( \sum_{i=1}^dx_ia_i \big) \\
+    &= \sum_{i=1}^dx_ia_i \big( \sum_{j=1}^dx_ja_j \big).  \]
+  Ensuite, on dérive
+  \[ \frac{\partial f}{\partial x_k} = \frac{\partial}{\partial x_1}\bigg( \sum_{i=1}^dx_ia_i \big( \sum_{j=1}^dx_ja_j \big) \bigg)
+  = 2a_k (\sum_{i=1}^d x_ia_i).\]
+  (la dérivée du produit $x_ia_ix_ja_j$ par rapport à $x_k$ est $0$ si $k\neq i, k\neq j$,
+  $a_kx_ja_j$ si $k=i, k\neqj$ et $a_ix_ia_k$ si $k\neq i, k=j$).
+  On conclut donc que ${\nabla f}(\vec{x}) = 2(\vec{x}\cdot\vec{a})\vec{a}$. 
+
+  3. On développe le carré et on utilise les deux résultats précédents pour obtenir
+  ${\nabla f}(\vec{x}) = -2s\vec{a} + 2(\vec{x}\cdot\vec{a})\vec{a}$. 
+\end{solution}
 
 \newcommand\mat[1]{\mathbf{#1}}
 
@@ -304,6 +334,10 @@ en optimisation.
 %%   \item $\mat{A} := \sigma(Z)$ de taille $k \times n$ ($\sigma$ est appliquée élément par élément). 
 %%   \end{itemize}
 %% \end{solution}
+
+
+%% other exercises
+%% \appendix
 
 %% \begin{exercice}
 %%   Soient $g_1(x_1,x_2) = 10x_1 + 12x_2 - 59$, $g_2(x_1,x_2) = -x_1$, $g_3(x_1,x_2) = -x_2$.

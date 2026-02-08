@@ -1,0 +1,107 @@
+% ----------------------------------------------------------------------
+\section{Conclusion}
+% ----------------------------------------------------------------------
+
+% ----------------------------------------------------------------------
+\begin{frame}<beamer>
+  \frametitle{Sommaire}
+  \tableofcontents[currentsection]
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Différentes classes de problèmes et d'algorithmes}
+
+  \[
+  \text{(P)} \left\{
+  \begin{array}{c}
+    \text{trouver} \ x \ \text{qui minimise} \ f(x) \ \text{tel que :} \\
+    g_i(x) \leq 0, \ i \in I = \{1, \dots, m\} \\
+    x \in S \subseteq \R^n
+  \end{array}
+  \right.
+  \]
+
+  \begin{itemize}
+  \item Optimisation continue ($S = \R^n$)
+    \begin{itemize}
+    \item sans contrainte ($I = \emptyset$) \\
+      \emph{calcul analytique}, \emph{descente de gradient}
+    \item avec contraintes ($I \neq \emptyset$) 
+      \begin{itemize}
+        \item non-linéaires
+        \item linéaires \\
+        \emph{simplexe, points intérieurs}
+      \end{itemize}
+    \end{itemize}
+  \item Optimisation combinatoire ($S = \Z^n$)\\
+    \emph{branch and bound}, \emph{(meta)-heuristiques} 
+  \end{itemize}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Problèmes d'optimisation en télécommunications}
+
+  \begin{itemize}
+  \item Allocation de fréquences / channel assignment
+    %Global System for Mobile Communications (GSM) (historiquement « Groupe spécial mobile »1)
+    %est une norme numérique de seconde génération pour la téléphonie mobile
+  \item Allocation de canaux / time slot assignment
+    %% Le time division multiple access (TDMA) ou accès multiple à répartition dans le temps en français, est une technique de contrôle d'accès au support permettant de transmettre plusieurs flux de trafic sur un seul canal ou une seule bande de fréquence. Il utilise une division temporelle de la bande passante, dont le principe est de répartir le temps disponible entre les différents utilisateurs. Par ce moyen, une fréquence (porteuse) ou une longueur d'onde peut être allouée, à tour de rôle (quasi simultanément), à plusieurs abonnés. 
+  \item Routage et allocation de longueurs d'onde / routing and wavelength assignment
+    %multiplexage en longueur d'onde, souvent appelé WDM (Wavelength Division Multiplexing en anglais)
+  \item Routage IP
+  \item Optimisation dans les réseaux radio maillés :
+    \begin{itemize}
+    \item placement min. de points d'accès / min. gateway placement
+    \item placement équitable de points d'accès / fair gateway placement
+    \item routage équitable / fair joint routing and scheduling
+    \item routage en temps minimum / minimum time routing
+    \end{itemize}
+    %p. 36/37 thèse Optimisation de la capacité des réseaux maillés, C. Molle  
+  \end{itemize}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Lien avec l'IA}
+
+  \begin{block}{Exemple de l'apprentissage automatique supervisé}
+
+    \begin{itemize}
+      \item données : $d+1$ variables $\vec{x} \in \R^d$ et $y$ observées sur $n$ individus. 
+        \begin{itemize}
+        \item si $y \in C$ variable \emph{catégorielle}, problème de \emph{classification}. 
+        \item si $y \in \R$ variable \emph{quantitative}, problème de \emph{régression}. 
+        \end{itemize}
+      \item phase d'apprentissage : déterminer les paramètres $(w_1, \dots, w_m)$ d'un modèle $f$
+        qui calcule $y$ à partir de $\vec{x}$.
+      \item phase d'inférence : étant donné une nouvelle valeur $\vec{x}^0$,
+        déterminer une valeur $y^0$ à partir de $f(w_1, \dots, w_m)(\vec{x}^0)$. 
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+%% % ----------------------------------------------------------------------
+%% \begin{frame}
+%%   \frametitle{Pour aller plus loin}
+
+%%   \begin{itemize}
+%%   \item Théorie de la dualité de Lagrange
+%%   \end{itemize}
+
+
+%%   \begin{itemize}
+%%   \item Livre de référence sur les aspects théoriques de l'optimisation
+%%   \end{itemize}
+
+%% \begin{thebibliography}{alpha}
+%% \bibitem{MM}
+%% Michel Minoux, \emph{Programmation mathématique, Théorie et algorithmes}, Lavoisier, 2eme édition, 2008, 711 pp.
+%% \end{thebibliography}
+
+%% \end{frame}

@@ -1,0 +1,260 @@
+% ----------------------------------------------------------------------
+\section{Convexité et différentiabilité}
+% ----------------------------------------------------------------------
+%permet de dire si on peut chercher un min ou un max
+%permet de dire si tout optimum local est un optimum global ou non
+
+% ----------------------------------------------------------------------
+\begin{frame}<beamer>
+  \frametitle{Sommaire}
+  \tableofcontents[currentsection]
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Convexité d'un ensemble}
+
+  \begin{block}{Définition}
+    $S \subset \R^n$ est convexe ssi  
+    pour tout $x,y \in S$ et $\lambda \in [0,1]$,
+    $\lambda x - (1 - \lambda) y \in S$. 
+  \end{block}
+
+  \begin{exampleblock}{Exemple pour $S \subset \R^2$}
+    \centering
+    \includegraphics[width=0.25\textwidth,page=2]{ens-conv}\hspace{0.05\textwidth}
+    \includegraphics[width=0.25\textwidth,page=1]{ens-conv}
+  \end{exampleblock}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Contrôle}
+
+  \includegraphics<+>[width=1\textwidth]{ens-conv-Q}%
+  \includegraphics<+>[width=1\textwidth]{ens-conv-A}%
+
+  \scriptsize{\url{https://www.youtube.com/playlist?list=PL9_jI1bdZmz0hIrNCMQW1YmZysAiIYSSS}}
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Convexité d'une fonction}
+
+  \begin{block}{Définition}
+     Soit $S \subset \R^n$ convexe.
+     Une fonction $f : S \rightarrow \R$ est convexe ssi  
+    pour tout $x,y \in S$ et $\lambda \in [0,1]$,
+    $f(\lambda x - (1 - \lambda) y) \leq \lambda f(x) + (1 - \lambda) f(y)$. 
+  \end{block}
+
+  \begin{exampleblock}{Exemple pour $f:\R \rightarrow \R$}
+    \centering
+    \includegraphics[width=0.45\textwidth,page=2]{fonc-conv}\hspace{0.05\textwidth}
+    \includegraphics[width=0.45\textwidth,page=1]{fonc-conv}
+  \end{exampleblock}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Différentiabilité pour $f: \R \rightarrow \R$ (1/2) }
+
+  \begin{block}{Dérivée première}
+    \begin{columns}
+      \begin{column}{0.5\textwidth}
+        \begin{align*}
+          f'(x) &:= \frac{\partial f}{\partial x}(x) \\
+          &= \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h}.
+        \end{align*}
+      \end{column}
+      \begin{column}{0.5\textwidth}
+        \begin{center}
+          \includegraphics<+>[width=1\textwidth,page=2]{derivee}%    
+          \includegraphics<+>[width=1\textwidth,page=1]{derivee}%
+        \end{center}
+      \end{column}
+    \end{columns}
+  \end{block}
+
+  \begin{block}{Interprétation en un point $x^0$}
+    \begin{itemize}
+    \item Le signe de $f'(x^0)$ indique comment évolue $f$ autour de $x^0$: 
+      \begin{itemize}
+      \item \alert<1-2>{si $f'(x^0) < 0$, $f$ $\downarrow$ quand $x$ $\uparrow$},
+      \item si $f'(x^0) > 0$, $f$ $\uparrow$ quand $x$ $\uparrow$,
+      \end{itemize}
+    \item La valeur absolue donne l'ampleur du changement. 
+      %% \begin{itemize}
+      %% \item \alert<3>{si $f'(x^0) = 0$, $f$ change \emph{peu} autour de $x^0$}. 
+      %% \end{itemize}
+    \end{itemize}
+  \end{block}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Différentiabilité pour $f: \R \rightarrow \R$ (2/2) }
+
+  \begin{block}{Dérivée seconde = dérivée de la dérivée première}
+    $f'' := \frac{\partial f'}{\partial x} = \frac{\partial}{\partial x}\frac{\partial f}{\partial x}
+    = \frac{\partial ^{2}f}{\partial x^{2}}$.
+  \end{block}
+
+  \begin{block}{Interprétation en un point $x^0$}
+    \begin{itemize}
+    \item Le signe de $f''(x^0)$ indique comment évolue $f'$ autour de $x^0$. 
+      \begin{itemize}
+      \item si $f''(x^0) < 0$, $f'$ $\downarrow$ quand $x$ $\uparrow$, \dome
+      \item si $f''(x^0) > 0$, $f'$ $\uparrow$ quand $x$ $\uparrow$,   \bol
+      \end{itemize}
+    \end{itemize}
+  \end{block}
+
+  %% \begin{block}{En particulier, si $f'(x^0) = 0$ et $f''(x^0) > 0$, alors}
+  %%   \begin{itemize}
+  %%     \item $f'$ $\uparrow$ (donc $f'$ positive, donc $f$ $\uparrow$) quand $x$ $\uparrow$,
+  %%     \item $f'$ $\downarrow$ (donc $f'$ négative, donc $f$ $\downarrow$) quand $x$ $\downarrow$. 
+  %%   \end{itemize}
+  %%   \alert<2->{En quoi cela peut nous aider à trouver $x^\star$ qui minimise $f$ ?}
+  %% \end{block}
+  
+\end{frame}
+
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Différentiabilité pour $f: \R^n \rightarrow \R$ (1/2)}
+  
+  \begin{block}{Gradient (vecteur), extension de la dérivée première}
+    ${\nabla f} := (\frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \dots, \frac{\partial f}{\partial x_n})$ \\
+    \begin{itemize}
+    \item Il donne la direction dans laquelle $f$ augmente
+    \item (et est perpendiculaire à la courbe de niveau projetée),
+    \item sa magnitude donne l'ampleur du changement. 
+    \end{itemize}
+  \end{block}
+
+  \begin{center}
+    \includegraphics<+>[width=0.9\textwidth]{gradient}    
+  \end{center}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Différentiabilité pour $f: \R^n \rightarrow \R$ (2/2)}
+  
+  \begin{block}{Hessien (matrice), extension de la dérivée seconde}
+    $\nabla^2 f :=
+    \begin{bmatrix}{\frac {\partial ^{2}f}{\partial x_{1}^{2}}}&{\frac {\partial ^{2}f}{\partial x_{1}\partial x_{2}}}&\cdots &{\frac {\partial ^{2}f}{\partial x_{1}\partial x_{n}}}\\{\frac {\partial ^{2}f}{\partial x_{2}\partial x_{1}}}&{\frac {\partial ^{2}f}{\partial x_{2}^{2}}}&\cdots &{\frac {\partial ^{2}f}{\partial x_{2}\partial x_{n}}}\\\vdots &\vdots &\ddots &\vdots \\{\frac {\partial ^{2}f}{\partial x_{n}\partial x_{1}}}&{\frac {\partial ^{2}f}{\partial x_{n}\partial x_{2}}}&\cdots &{\frac {\partial ^{2}f}{\partial x_{n}^{2}}}\end{bmatrix}$
+  \end{block}
+
+  \begin{block}{Matrice (semi-)définie positive, extension du signe}
+    Une matrice semi-définie positive (resp. définie positive) si 
+    ses valeurs propres sont $\geq 0$ (resp. $> 0$).
+  \end{block}
+
+  \only<1>{
+    \begin{block}{Note 1 : }
+      Une valeur propre d'une matrice carrée $M$ est telle que
+      $Mv = \lambda v$ pour un vecteur non nul $v$ appelé vecteur propre.
+      %% les composantes du vecteur
+    %% $\lambda^T := (\lambda_1, \lambda_2,\dots, \lambda_n)$, solutions de
+    %% l'équation $\det{(\lambda I - M)} = 0$. 
+    
+  \end{block}
+  }
+  \only<2>{
+    \begin{block}{Note 2 :}
+    \begin{tabular}{ccc}
+      hessien & $\Leftrightarrow$ & dérivée seconde \\\hline
+      semi-définie positive & $\Leftrightarrow$ & $\geq 0$ \\\hline
+      définie positive & $\Leftrightarrow$ & $> 0$  
+    \end{tabular}
+  \end{block}
+  }
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Différentiabilité et convexité}
+
+  \begin{block}{Théorème de convexité}
+    Si $f$ est continûment différentiable (deux fois) en tout $x \in \R^n$,
+    les conditions suivantes sont équivalentes:
+    \begin{enumerate}
+    \item $f$ est convexe,
+    %%\item $\forall x, y, \ f(y) > f(x) + {\nabla f} ^T(x) \cdot (y - x)$,
+    \item $\forall x$, le hessien $\nabla^2f(x)$ est une matrice \emph{semi-définie positive}
+
+      (ou $\forall x$, $f''(x) \geq 0$ quand $n = 1$).
+    \end{enumerate}
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Exemples numériques pour $f:\R \rightarrow \R$}
+
+  Rappel : $(u+v)' = u'+v'$, $(ku)' = ku'$, $(u^n)' = nu^{(n-1)}$
+
+  ~
+  
+  \begin{block}{$f(x) = x^2 - 6x + 4$}
+    \begin{itemize}
+      \item $f'(x) =$\only<1>{?}\only<2>{$2x - 6$}
+      \item $f''(x) =$ \only<1>{?}\only<2>{$2$}
+      \item $f$ convexe \only<1>{?}\only<2>{$\rightarrow$ oui}
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{$f(x) = 2x^3 - x^2 + 2x + 5$}
+    \begin{itemize}
+      \item $f'(x) =$\only<1>{?}\only<2>{$6x^2 - 2x + 2$}
+      \item $f''(x) = $\only<1>{?}\only<2>{$12x - 2$}
+      \item $f$ convexe \only<1>{?}\only<2>{$\rightarrow$  non}
+    \end{itemize}
+  \end{block}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Exemple numérique pour $f:\R^2 \rightarrow \R$}
+
+  \begin{block}{$f(x_1,x_2) = x_1^2 + x_2^2 - 4x_1 + 8x_2 - 5$}
+    \only<1-2>{
+      Dérivées partielles : 
+      \begin{itemize}
+      \item $\frac{\partial f}{\partial x_1} = $\only<1>{?}\only<2>{$2x_1 - 4$},
+      \item $\frac{\partial f}{\partial x_2} = $\only<1>{?}\only<2>{$2x_2 + 8$},
+      \item $\frac{\partial^2 f}{\partial x_1^2} = $\only<1>{?}\only<2>{$2$},
+      \item $\frac{\partial^2 f}{\partial x_1x_2} = $\only<1>{?}\only<2>{$0$},
+      \item $\frac{\partial^2 f}{\partial x_2x_1} = $\only<1>{?}\only<2>{$0$},
+      \item $\frac{\partial^2 f}{\partial x_2^2} = $\only<1>{?}\only<2>{$2$}.
+      \end{itemize}
+      Que conclure sur la convexité de $f$ ?
+    }
+    \only<3>{
+      gradient, hessien : 
+      \begin{itemize}
+      \item ${\nabla f}(x_1,x_2) = \left(\begin{array}{l}
+            2x_1 - 4\\
+            2x_2 + 8
+          \end{array}
+          \right)$
+      \item $\nabla^2f(x_1,x_2) =\left(\begin{array}{cc}
+            2 & 0 \\
+            0 & 2 \\
+          \end{array}
+          \right)$
+      \item $\nabla^2f(x_1,x_2)$ définie-positive en tout $(x_1,x_2)$
+      \item $f$ convexe
+      \end{itemize}
+    }
+  \end{block}
+\end{frame}

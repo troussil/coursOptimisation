@@ -1,0 +1,306 @@
+% ----------------------------------------------------------------------
+\section{Optimisation continue avec contraintes}
+% ----------------------------------------------------------------------
+
+% ----------------------------------------------------------------------
+\begin{frame}<beamer>
+  \frametitle{Sommaire}
+  \tableofcontents[currentsection]
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Formulation mathématique}
+
+  \[
+  (\text{P}^\bullet) \left\{
+  \begin{array}{c}
+    \text{trouver} \ x \ \text{qui minimise} \ f(x) \ \text{tel que :} \\
+    g_i(x) \leq 0, \ i \in I = \{1, \dots, m\} \\
+    x \in \R^n
+  \end{array}
+  \right.
+  \]
+
+  \begin{block}{Le problème peut}
+    \begin{itemize}
+    \item être \emph{infaisable} :
+      $X := \{ x \in \R^n \ | \ g_i(x) \leq 0, i \in I \}$,
+      l'ensemble des solutions candidates est vide.
+    \item être \emph{non borné} : $\exists t, v, x^0$, tels que $\lim_{t \rightarrow \infty} f(x^0 + tv) = -\infty$.
+    \item avoir une ou \emph{plusieurs solutions}. 
+    \end{itemize}
+  \end{block}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Problème infaisable}
+
+  \begin{center}
+      \includegraphics[width=0.5\textwidth]{p-infaisable}    
+  \end{center}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Problème non borné}
+
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{p-non-borne}    
+  \end{center}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Plusieurs solutions}
+
+  \begin{center}
+    \includegraphics[width=0.4\textwidth]{p-plusieurs}    
+  \end{center}
+  
+\end{frame}
+
+
+%% % ----------------------------------------------------------------------
+%% \begin{frame}
+%%   \frametitle{Saturation et cône tangent en un point $x^0 \in X$}
+
+%%   \begin{itemize}
+%%     \item Une contrainte $g_i$ est \emph{saturée} en $x^0$ ssi $g_i(x^0) = 0$
+%%     \item L'ensemble des contraintes saturées en $x^0$ est
+%%       $\{g_i\}_{i \in I_0}, \ I_0 := \{i \ | \ g_i(x^0) = 0 \}$
+%%     \item Le cône tangent en $x^0$ est donné par le gradient des contraintes saturées en $x^0$ :
+%%       $G_0 := \{ y \in \R^n \ | \ {\nabla g_i}^T \cdot y \leq 0, \ \forall i \in I_0 \}$ 
+%%   \end{itemize}
+
+%%   \begin{center}
+%%       \includegraphics[width=0.45\textwidth,page=1]{cone-tangent} \hspace{0.01\textwidth}   
+%%       \includegraphics[width=0.45\textwidth,page=2]{cone-tangent}    
+%%   \end{center}
+  
+%% \end{frame}
+
+%% % ----------------------------------------------------------------------
+%% \begin{frame}
+%%   \frametitle{Hypothèse de qualification des contraintes (QC)}
+
+%%   $X$ satisfait en $x^0 \in X$ l'hypothèse (QC) ssi pour tout $\epsilon$
+%%   positif suffisamment petit, la boule $B(x^0,\epsilon)$ de centre $x^0$
+%%   et rayon $\epsilon$ est telle que $B(x^0,\epsilon) \cap G_0 \subset X$. 
+
+%%   \only<1>{
+%%   \begin{exampleblock}{Cas où (QC) est vérifiée en $x^0$ : }
+%%   \begin{center}
+%%       \includegraphics[width=0.5\textwidth,page=1]{cone-tangent}    
+%%   \end{center}
+%%   \end{exampleblock}
+%%   }
+%%   \only<2>{
+%%   \begin{exampleblock}{Cas où (QC) n'est pas vérifiée en $x^0$ : }
+%%   \begin{center}
+%%       \includegraphics[width=0.5\textwidth,page=2]{cone-tangent}    
+%%   \end{center}
+%%   \end{exampleblock}
+%%   }
+%%   \only<3>{
+%%     \begin{block}{Théorème local}
+%%       $(QC)$ est vérifiée \alert{en un point $x^0 \in X$}
+%%       \begin{itemize}
+%%       \item si les gradients $\{ {\nabla g_i}(x^0) \}_{i \in I_0}$ des contraintes saturées en $x^0$
+%%         sont linéairement indépendants
+%%       \end{itemize}
+%%     \end{block}
+    
+%%     \begin{block}{Théorème global}
+%%       $(QC)$ est vérifiée \alert{pour tout $x \in X$}
+%%       \begin{itemize}
+%%       \item si toutes les fonctions $g_i$ sont linéaires
+%%       \item ou si toutes les fonctions $g_i$ sont convexes, différentiables, et l'intérieur de $X$ n'est pas vide
+%%       \end{itemize}
+%%     \end{block}
+%%   }
+  
+%% \end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Intuition sur les conditions d'optimalité}
+
+  On ne peut pas faire mieux sans violer les contraintes
+
+  ~
+  
+  
+  \begin{center}
+      \includegraphics[width=0.5\textwidth]{kkt}    
+  \end{center}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Hypothèses techniques}
+
+  \[
+  (\text{P}^\bullet) \left\{
+  \begin{array}{c}
+    \text{trouver} \ x \ \text{qui minimise} \ f(x) \ \text{tel que :} \\
+    g_i(x) \leq 0, \ i \in I = \{1, \dots, m\} \\
+    x \in \R^n
+  \end{array}
+  \right.
+  \]
+
+  \begin{itemize}
+  \item (H1) $f$ et $(g_i)_{i \in I}$ continues, différentiables
+  \item (H2) $X \neq \emptyset$
+  \item (QC) hypothèse de qualification des contraintes
+  \end{itemize}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Conditions d'optimalité de Karush, Kuhn et Tucker}
+
+  \begin{block}{Conditions nécessaires}
+    En supposant (H1), (H2), (QC), si $x^0$ est un minimum local de $(\text{P}^\bullet)$,
+    alors il existe $\{\lambda_i \geq 0\}_{i \in I}$ tels que:
+    \[
+    (\text{KKT})
+    \left\{
+    \begin{array}{ll}
+      -{\nabla f}(x^0) = \sum_{i \in I} \lambda_i {\nabla g_i}(x^0)
+      & \text{(stationnarité)} \\
+      \lambda_i g_i(x^0) = 0, \ \forall i \in I
+      & \text{(complémentarité)} \\
+    \end{array}
+    \right.
+    \]
+  \end{block}
+
+  \begin{block}{Conditions suffisantes}
+    Dans le cas où, en plus, $f$ et $\{g_i\}_{i\in I}$ sont \emph{convexes},
+    si les conditions (KKT) sont vérifiées pour $x^0$, alors $x^0$ est un minimum
+    (global) de $(\text{P}^\bullet)$.  
+  \end{block}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Exemple numérique}
+
+  \begin{center}  
+  \begin{tabular}{l}
+    trouver $(x_1,x_2)$ qui minimisent \\
+    \textcolor{red}{$f(x_1,x_2) := (x_1 - 3)^2 + (x_2 - 4)^2$} tels que : \\
+    pour tout $i = 1,2,3$, \textcolor{blue}{$g_i(x_1,x_2) \leq 0$}, avec \\
+    $g_1(x_1,x_2) := x_1 + x_2 - 5$, $g_2(x_1,x_2) := -x_1$, $g_3(x_1,x_2) := -x_2$ 
+    %% \textcolor{blue}{$\left\{
+    %% \begin{array}{l}
+    %%   g_1(x_1,x_2) \leq 0, \ g_1(x_1,x_2) := x_1 + x_2 - 5 \\
+    %%   g_2(x_1,x_2) \leq 0, \ g_2(x_1,x_2) := x_1 - x_2 - 2.5 \\
+    %%   g_3(x_1,x_2) \leq 0, \ g_3(x_1,x_2) := -x_1 \\
+    %%   g_4(x_1,x_2) \leq 0, \ g_4(x_1,x_2) := -x_2
+    %% \end{array}
+    %% \right.$}
+  \end{tabular}
+  \end{center}
+  
+  \begin{center}  
+    \includegraphics[width=0.45\textwidth,page=1]{kuhn-tucker}
+  \end{center}
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Résolution par les équations (KKT)}
+
+  \only<1>{  
+  \begin{itemize}
+    \item Comme pour tout $x$, $\nabla^2f(x)$ est définie-positive, $f$ est convexe
+    \item Les contraintes $\{g_i\}_{i \in I}$ sont linéaires donc convexes
+    \item $x^\star$ et $\lambda_1,\lambda_2,\lambda_3$ qui vérifient (KKT)
+      sont tels que $x^\star$ est le minimum global
+    \end{itemize}
+  }
+  \only<2>{
+    On joue aux devinette et suppose que seule $g_1$ est saturée 
+  \begin{itemize}
+  \item c-à-d. telle que $g_1(x^\star) = x_1^\star + x_2^\star - 5 = 0$,
+  \item complémentarité : $\lambda_2 = \lambda_3 = 0$, 
+  \item stationnarité : $-{\nabla f}(x^\star) = \lambda_1 {\nabla g_1}(x^\star)$.
+  \end{itemize}
+
+  Le système à résoudre est donc: 
+  \[
+  \left\{
+  \begin{array}{l}
+    x_1^\star + x_2^\star - 5 = 0 \\
+  - \left( \begin{array}{c} 2x_1^\star - 6 \\ 2x_2^\star - 8 \end{array} \right) =
+  \lambda_1 \left( \begin{array}{c} 1 \\ 1 \end{array} \right) \\
+  \end{array}
+  \right.
+  \]
+  D'où on déduit $x_1^\star = 2$, $x_2^\star = 3$, $\lambda_1 = 2$. 
+  }
+
+  \only<3>{
+  \begin{center}  
+    \includegraphics[width=0.45\textwidth,page=2]{kuhn-tucker}
+  \end{center}
+  }
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Méthodes d'optimisation}
+
+  \begin{itemize}
+  \item Recherche combinatoire et résolution des équations (KKT)
+    %par des méthodes d'optimisation sans contrainte
+    %ex. resoudre ax = b revient a minimiser (ax - b)^2  
+  \item Méthodes des pénalités
+    %: on élimine les contraintes en ajoutant à la fonction objectif des pénalités qui assurent
+    %qu'un point $\bar{x} \notin X$ ne soit pas minimum   
+  \item Méthodes exploitant la théorie de la dualité de Lagrange
+    %algorithmes d'Uzawa, Arrow-Hurwicz, Dantzig, méthode des multiplicateurs 
+  \item Méthodes de descente sous contrainte
+    %: de la solution courante, on cherche un déplacement de descente vers un point de $X$
+    %méthodes des directions réalisables, du gradient projeté, du gradient réduit (généralisé)...
+  \item Méthodes de linéarisation
+    %: à chaque étape, on cherche le minimum d'une approximation linéaire de $f$ pour trouver le déplacement 
+    %méthode de Franck et Wolf, plans sécants de Kelley, génération de colonne de Dantzig...
+  \item \dots
+  \end{itemize}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Note : cas particulier de fonctions linéaires}
+
+  On appelle problème d'optimisation linéaire (ou \emph{programme linéaire}),
+  le problème d'optimisation suivant : 
+  \[
+  \text{(PL)} \left\{
+  \begin{array}{c}
+    \text{trouver} \ x \ \text{qui minimise} \ f(x) \ \text{tel que :} \\
+    g_i(x) \leq 0, \ i \in I = \{1, \dots, m\} \\
+    x \in \R^n \\
+    f, \{g_i\}_{i \in I} \ \text{sont linéaires} \\
+  \end{array}
+  \right.
+  \]
+
+  (PL) est résolu en pratique par la méthode du \emph{simplexe}
+  %% dû essentiellement à Dantzig (1947). Le traitement correct
+  %% des configurations dégénérées est dû à Bland (1977).
+  %% cf. https://en.wikipedia.org/wiki/Revised_simplex_method
+  ou celle \emph{des points intérieurs}.
+\end{frame}

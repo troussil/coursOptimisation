@@ -1,0 +1,142 @@
+
+% ----------------------------------------------------------------------
+\section{Application : problème de régression}
+% ----------------------------------------------------------------------
+
+% ----------------------------------------------------------------------
+\begin{frame}<beamer>
+  \frametitle{Sommaire}
+  \tableofcontents[currentsection]
+\end{frame}
+
+%\renewcommand\vec{\mathbf}
+\renewcommand\vec{}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{IA et régression}
+
+  \begin{block}{Apprentissage automatique supervisé}
+
+    \begin{itemize}
+      \item données : $d+1$ variables $\vec{x} \in \R^d$ et $y \in \R$ observées sur $n$ individus. 
+      \item phase d'apprentissage : déterminer les paramètres $(w_1, \dots, w_m)$ d'un modèle $f$
+        qui calcule $y$ à partir de $\vec{x}$.
+      \item phase d'inférence : étant donné une nouvelle valeur $\vec{x}^0$,
+        calculer $f(w_1, \dots, w_m)(\vec{x}^0)$
+        (alors que la valeur $y^0$ correspondante est inconnue). 
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Intuition dans $\R^1$ avec un modèle linéaire}
+
+  \begin{center}
+      \includegraphics[width=0.5\textwidth]{linear-regression}    
+  \end{center}
+
+  \begin{itemize}
+  \item en bleu, les couples $(x_i,y_i)$ observées,
+  \item en rouge, le graphe de la fonction $f(w_1, \dots, w_m)$
+    qui donne $y$ à partir de $x$.
+  \item $m = 2$ suffit dans ce cas (pente
+    et ordonnée à l'origine).
+  \end{itemize}
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Régression et optimisation}
+
+  \begin{block}{Apprentissage $=$ optimisation}
+
+    \begin{itemize}
+    \item on considère une fonction \emph{de perte} qui
+      est typiquement la moyenne des carrés des écarts (MSE)
+      entre ce que donne le modèle et les observations :
+      \[ L(w_1, \dots, w_m) :=
+      \frac{1}{n} \sum_{i=1}^n (f(w_1, \dots, w_m)(\vec{x}_i) - y_i)^2 \]
+    \item on la minimise par descente de gradient
+      \begin{itemize}
+      \item $f$ doit être différentiable et on doit calculer son gradient
+      \item (outils de différentiation automatique, ex. \verb!PyTorch!)
+      \item il y a des \emph{hyper-paramètres} ($\lambda$, nombre d'itérations, etc.)
+      \end{itemize}
+    \end{itemize}
+
+  \end{block}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\newcommand\mat[1]{\mathbf{#1}}
+
+\begin{frame}
+  \frametitle{Exemple de modèle}
+  
+  \begin{block}{Définition sous forme matricielle}
+    Soit $k \in \N$.
+    On a $m = k(d+2)$ paramètres stockés dans les matrices :
+    \begin{itemize}
+      \item $\mat{M}_1$ de taille $k \times (d+1)$,
+      \item $\mat{M}_2$ de taille $1 \times k$.
+    \end{itemize}
+    
+    \[ f(\mat{M}_1, \mat{M}_2)(\mat{x}) := \mat{M}_2 \cdot \sigma ( \mat{M}_1 \cdot \mat{x} ). \]
+    où $\sigma$ est une fonction d'activation non polynomiale appliquée
+    élément par élément (ex. sigmoïde). 
+  \end{block}
+  
+  \begin{block}{Théorème d'approximation universelle}
+  Il existe $k$ tel qu'on approxime n'importe quelle fonction
+  aussi bien qu'on veut par ce modèle ! 
+  \end{block}
+
+\end{frame}
+
+%% TODO
+%% % ----------------------------------------------------------------------
+%% \begin{frame}
+%%   \frametitle{Gradient ?}
+
+%%   \begin{itemize}
+%%   \item (immédiat ;-)) $\frac{\partial L}{\partial \mat{M}_2}(\mat{M}_1, \mat{M}_2, \mat{x})
+%%     = \sigma ( \mat{x}^T \cdot \mat{M}_1^T )$
+%%   \item (composition) on pose $\mat{z}:=\mat{M}_1\mat{x}$, $\mat{y}:=\sigma(\mat{z})$,
+%%     \begin{align*}
+%%     \frac{\partial L}{\partial \mat{M}_1}(\mat{M}_1, \mat{M}_2, \mat{x})
+%%     &= \mat{M_2} \Bigg( \frac{\partial \mat{y}}{\partial \mat{z}} \frac{\partial \mat{z}}{\partial \mat{M}_1} \Bigg) \\
+%%     &= \mat{M_2} \sigma'( \mat{M}_1 \cdot \mat{x} ) \mat{x}^T.
+%%     \end{align*}
+%%   \end{itemize}
+
+%%   astuce : formulaire de dérivées matricielles.
+
+%%   mieux : outils de dérivation automatique comme \verb!PyTorch!.
+  
+%% \end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Exemple de gros modèle : AlexNet (2012)}
+
+    (CNN → RN → MP)² → (CNN³ → MP) → (FC → DO)² → Linear → softmax
+
+où
+
+\begin{itemize}
+\item     CNN = convolutional layer (with ReLU activation)
+\item     RN = local response normalization
+\item     MP = maxpooling
+\item     FC = fully connected layer (with ReLU activation)
+\item     Linear = fully connected layer (without activation)
+\item     DO = dropout
+\end{itemize}
+
+combinaisons de matrices et de fonctions d'activation \\
+60 millions de paramètres 
+
+\end{frame}

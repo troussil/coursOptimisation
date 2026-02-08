@@ -1,0 +1,98 @@
+% ----------------------------------------------------------------------
+\section{Application : problème de classification}
+% ----------------------------------------------------------------------
+
+% ----------------------------------------------------------------------
+\begin{frame}<beamer>
+  \frametitle{Sommaire}
+  \tableofcontents[currentsection]
+\end{frame}
+
+%% % ----------------------------------------------------------------------
+%% \begin{frame}
+%%   \frametitle{Optimisation et IA}
+
+%%   \begin{block}{Problème \emph{complexe}}
+%%   \begin{itemize}
+%%   \item IA $\approx$ faire résoudre par une machine un problème \emph{complexe}
+%%   \item problème \emph{complexe} $\approx$ problème d'optimisation (y a-t-il une solution ?
+%%     quelle est la meilleure solution ?)
+%%   \end{itemize}
+%%   \end{block}
+
+%%   \begin{block}{Apprentissage automatique}
+%%     \begin{itemize}
+%%     \item apprentissage supervisé
+%%       \begin{itemize}
+%%       \item fonction de prédiction $f$(\cat) = chat, 
+%%       \item trouver $f$ qui minimise \[ \sum_\text{ensemble d'apprentissage} (\text{erreur de prédiction de } f). \]
+%%       \end{itemize}
+%%     \end{itemize}
+%%   \end{block}
+
+%% \end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{IA et classification binaire}
+
+  \begin{block}{Apprentissage automatique supervisé}
+
+    \begin{itemize}
+      \item données : $d+1$ variables $\vec{x} \in \R^d$ et $y \in \{-1,1\}$ observées sur $n$ individus. 
+      \item phase d'apprentissage : déterminer les paramètres $(w_1, \dots, w_m)$ d'un modèle $f$
+        qui détermine $y$ à partir de $\vec{x}$.
+      \item phase d'inférence : étant donné une nouvelle valeur $\vec{x}^0$,
+        le classifieur renvoie
+        \[
+        \left\{
+        \begin{array}{l} 1 \ \text{si} \ f(w_1, \dots, w_m)(\vec{x}^0) \geq 0 \\
+          -1 \ \text{sinon}.
+        \end{array}
+        \right.
+        \]
+    \end{itemize}
+    
+  \end{block}
+
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Intuition dans $\R^2$ avec un modèle linéaire}
+  
+  \centering
+  \includegraphics[width=3cm]{linear-separation.png}
+
+  ~
+  
+  \begin{itemize}
+  \item points rouges sont les $\vec{x}_i$ tels que $y_i = 1$, 
+  \item points bleus sont les $\vec{x}_i$ tels que $y_i = -1$, 
+  \end{itemize}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Classification et optimisation}
+
+  \begin{block}{Apprentissage $=$ optimisation sous contrainte}
+
+    \begin{itemize}
+    \item le classifieur ne fait pas d'erreur si, pour tout $i$,
+      $y_i f(w_1, \dots, w_m)(\vec{x}_i) > 0$ : c'est un ensemble
+      de contraintes.
+    \item la fonction objectif est typiquement 
+      \[ L(w_1, \dots, w_m) := w_1^2 + \dots + w_m^2, \]
+      ce qui revient à maximiser la marge de séparation
+    \end{itemize}
+  \end{block}
+
+  \begin{block}{SVM}
+    C'est le principe des séparateurs à vaste marge (SVM),
+    un temps à la mode du fait d'une plus grande capacité de
+    généralisation que les réseaux de neurones. 
+  \end{block}
+      
+\end{frame}

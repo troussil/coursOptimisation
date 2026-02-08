@@ -1,0 +1,330 @@
+% ----------------------------------------------------------------------
+\section{Optimisation continue sans contrainte}
+% ----------------------------------------------------------------------
+
+% ----------------------------------------------------------------------
+\begin{frame}<beamer>
+  \frametitle{Sommaire}
+  \tableofcontents[currentsection]
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Enoncé du problème}
+
+  \[
+  (\text{P}^\circ) \quad
+    \text{trouver} \ x \ \text{qui minimise} \ f(x), \ x \in \R^n
+  \]
+
+  \begin{itemize}
+  \item problème fréquent,
+  \item même avec contraintes, on peut parfois se ramener à $\text{P}^\circ$,
+  \item existence d'une solution optimale si $f$ est continue et :
+    \begin{itemize}
+    \item soit est définie dans $S \subset \R^n$, fermé et borné,
+    \item soit $f(x) \rightarrow \infty$ quand $\|x\| \rightarrow \infty$, 
+    \end{itemize}
+  \item mais non unicité et nombreux optima locaux pour $f$ quelconque.
+  \end{itemize}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{En une image}
+
+  \begin{exampleblock}{Exemple dans $\R$}
+    \centering
+    \includegraphics[width=0.7\textwidth,page=1]{opt-loc}
+  \end{exampleblock}
+
+\end{frame}
+
+
+%% % ----------------------------------------------------------------------
+%% \begin{frame}
+%%   \frametitle{Optimum local}
+
+%%   \begin{block}{Définition}
+%%     La solution $x^0$ est un optimum local du problème (P) s'il existe un voisinage
+%%     $V(x^0)$ autour de $x^0$ tel que $x^0$ soit optimum global du problème restreint
+%%     à $V(x^0)$: 
+%%   \[
+%%   \left\{
+%%   \begin{array}{c}
+%%     \text{trouver} \ x \ \text{qui minimise} \ f(x) \ \text{où} \\
+%%     \alert{x \in V(x^0)}
+%%   \end{array}
+%%   \right.
+%%   \]
+%%   \end{block}
+
+%%   \begin{exampleblock}{Exemple dans $\R$}
+%%     \centering
+%%     \includegraphics[width=0.7\textwidth,page=2]{opt-loc}
+%%   \end{exampleblock}
+  
+%% \end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Conditions d'optimalité générales}
+
+  \begin{block}{Conditions d'optimalité locale}
+    Soit $f$ continue et deux fois continûment différentiable en tout $x \in \R^n$.
+    $x^\star$ est un optimum local ssi
+    \begin{itemize}
+    \item le gradient ${\nabla f}(x^\star)$ est nul (stationnarité) et
+    \item le hessien $\nabla^2f(x^\star)$ est une matrice \emph{définie positive},
+      c-à-d. ses valeurs propres sont \emph{strictement positives}.
+      %le strictement permet d'éviter les points d'inflexion ou
+      %on a un point stationnaire et ou le hessien est seulement semi-definie positive
+    \end{itemize}
+  \end{block}
+
+  \only<1>{
+  \begin{block}{Théorème d'optimalité globale (avec différentiabilité)}
+    Soit $f$ convexe et continûment différentiable en tout $x \in \R^n$.
+    $x^\star$ est un optimum global ssi ${\nabla f}(x^\star) = 0$
+    (ou $f'(x^\star) = 0$ quand $n = 1$).
+
+  \end{block}
+  }
+  \only<2>{
+  \begin{block}{Théorème d'optimalité globale (sans différentiabilité)}
+    Soit $f$ convexe et définie sur $S \subset \R^n$ convexe.
+    Tout optimum local est un optimum global.  
+  \end{block}
+  }
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Exemple numérique pour $f:\R \rightarrow \R$}
+
+  \begin{itemize}
+  \item $f(x) = x^2 - 6x + 4$\\
+  \item $f'(x) = 2x - 6$\\
+  \item $f''(x) = 2$ \\ 
+  \item $\forall x, \ f''(x) \geq 0 \Rightarrow f$ convexe
+  \end{itemize}
+  
+  On applique le théorème : $x^\star$ est un minimum global ssi $f'(x^\star) = 0$ 
+  
+  On résoud l'équation : $2x^\star - 6 = 0$, donc $x^\star = 3$.
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Exemple numérique pour $f:\R^2 \rightarrow \R$}
+
+  \begin{itemize}
+  \item $f(x_1,x_2) = x_1^2 + x_2^2 - 4x_1 + 8x_2 - 5$
+  \item ${\nabla f}(x_1,x_2) = \left(\begin{array}{l}
+    2x_1 - 4\\
+    2x_2 + 8
+  \end{array}
+    \right)$
+  \item $\nabla^2f(x_1,x_2) =\left(\begin{array}{cc}
+    2 & 0 \\
+    0 & 2 \\
+  \end{array}
+    \right)$
+  \item $\nabla^2f(x_1,x_2)$ définie-positive en tout $(x_1,x_2)$, 
+  donc $f$ convexe
+  \end{itemize}
+
+  On applique le théorème : $x^\star$ minimum global ssi ${\nabla f}(x^\star) = 0$
+
+  On résoud le système d'équations : 
+  \[
+  \left\{
+  \begin{array}{ll}
+    2x^\star_1 - 4 & = 0\\
+    2x^\star_2 + 8 & = 0
+  \end{array}
+  \right.
+  \]
+  Donc $x^\star_1 = 2$, $x^\star_2 = -4$.
+  
+\end{frame}
+
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Méthode numérique : descente de gradient}
+
+  \begin{itemize}
+  \item Soit $f : \R^n \rightarrow \R$ différentiable
+  \item On part d'une solution initiale $x^{(0)}$
+  \item A chaque étape, on obtient une nouvelle solution
+    \[ x^{(k+1)} := x^{(k)} - \textcolor{blue}{\lambda^{(k)}} \alert{{\nabla f}(x^{(k)})}, \ \lambda^{(k)} > 0. \]
+    (c-à-d. qu'on se déplace dans la direction opposée du \alert{gradient},
+    d'un pas d'une certaine \textcolor{blue}{longueur})
+  \item On s'arrête quand le gradient s'annule (ou presque)
+  \end{itemize}
+
+  ~
+
+  Questions : 
+  $x^{(0)}$ ? $\lambda^{(k)}$ ? terminaison ?
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{La convergence dépend de $f$ et de $x^{(0)}$}
+
+  \begin{itemize}
+    \item $f(x) = 2x\exp{(-x^2)}$
+  \end{itemize}
+  
+  \begin{center}
+      \includegraphics[width=0.6\textwidth]{desc-grad-non-conv}    
+  \end{center}
+  
+  \begin{itemize}
+  \item En partant de $x^{(0)} = 0$, on peut atteindre $-\frac{\sqrt{2}}{2}$, le minimum.
+  \item En partant de $x^{(0)} = 1$, on a $x^{(k)} \rightarrow \infty$ quand $k \rightarrow \infty$. 
+  \end{itemize}
+  
+\end{frame}
+
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Longueur du pas}
+
+  \begin{block}{De nombreuses méthodes pour déterminer $\lambda^{(k)}$}
+  \begin{itemize}
+  \item fixé par l'utilisateur %(normalisé par la norme du gradient)
+  \item $1 / k \|{\nabla f}(x^{(k)})\|$ (le pas diminue au fur et à mesure des itérations)
+  \item \emph{Newton}: $\Big( {\nabla^2 f}(x^{(k)}) \Big)^{-1}$
+    \begin{itemize}
+    \item $x^{(k+1)}$ est l'optimal d'une approximation quadratique en $x^{(k)}$
+    \item nécessite le hessien (et le gradient)
+    \end{itemize}
+  \item \emph{Steepest descent}: tel que $f(x^{(k)} - \lambda^{(k)} {\nabla f}(x^{(k)}))
+    = \min_{\lambda \geq 0} f(x^{(k)} - \lambda {\nabla f}(x^{(k)}))$
+  \end{itemize}
+  \end{block}
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Méthode de Newton: convergence en un pas}
+
+  \begin{itemize}
+  \item $f(x_1,x_2) = a_1x_1^2 + b_1x_1 + a_2x_2^2 + b_2x_2 + c$
+  \item 
+    $\forall (x_1,x_2), \ {\nabla f}(x_1,x_2)^T = (2a_1x_1 + b_1,2a_2x_2 + b_2)$
+  \item 
+  $ \forall (x_1,x_2), \ \nabla^2f(x_1,x_2) =
+  \left(\begin{array}{cc}
+    2a_1 & 0 \\
+    0 & 2a_2 \\
+  \end{array}
+  \right)
+  $
+  %
+  \end{itemize}
+
+  \begin{itemize}
+  \item $\left( \begin{array}{c} x_1^{(1)} \\ x_2^{(1)} \end{array} \right ) =
+    \left( \begin{array}{c} x_1^{(0)} \\ x_2^{(0)} \end{array} \right ) -
+  \left(\begin{array}{cc} \frac{1}{2a_1} & 0 \\ 0 & \frac{1}{2a_2} \\ \end{array} \right) \cdot
+  \left( \begin{array}{c} 2a_1x_1^{(0)} + b_1 \\ 2a_2x_2^{(0)} + b_2 \end{array} \right ) =
+  \left( \begin{array}{c} -\frac{b_1}{2a_1} \\ -\frac{b_2}{2a_2} \end{array} \right ) $, or
+  ${\nabla f}(-\frac{b_1}{2a_1}, -\frac{b_2}{2a_2})$ est nul : on a le minimum
+  \item convergence en une itération car $f$ est quadratique
+  \end{itemize}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Méthode de Newton: non convergence}
+
+  \begin{itemize}
+  \item $f(x) = \left \{
+    \begin{array}{ll}
+      -4x^3 + 3x^4 & \text{si} \ x\geq 0 \\
+      4x^3 + 3x^4 & \text{si} \ x < 0 \\
+    \end{array} \right.$
+  \end{itemize}
+  
+  \begin{center}
+      \includegraphics[width=0.6\textwidth]{newton-non-conv}    
+  \end{center}
+  
+  \begin{itemize}
+  \item En partant de $x^{(0)} = 0.4$, on converge vers 0, le minimum.
+  \item En partant de $x^{(0)} = 0.6$, on a $x^{(1)}$ = -0.6, $x^{(2)}$ = 0.6\dots 
+  \end{itemize}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{\emph{Steepest Descent}: convergence lente}
+
+  \begin{itemize}
+  \item $f(x_1,x_2) = 2x_1x_2 + 2x_2 - x_1^2 - 2x_2^2$
+  \item$(x_1^{(0)}, x_2^{(0)}) = (0, 0.5)$ 
+  \end{itemize}
+
+  \begin{center}
+      \includegraphics[width=0.6\textwidth]{steepest-desc}    
+  \end{center}
+  
+  \begin{itemize}
+  \item Deux directions successives sont toujours orthogonales
+  \item Ce qui est lent pour des fonctions à \emph{vallée étroite}. 
+  \end{itemize}
+    
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Autres méthodes}
+
+  \begin{itemize}
+  \item Newton modifié et quasi-Newton
+  \item méthode du gradient conjugué, méthode de Fletcher et Reeves
+  \item méthode de Davidon-Fletcher-Powell (DFP)
+  \item méthode de Broyden-Fletcher-Goldfarb-Shanno (BFGS)
+  \item algorithme de Powell (sans dérivée !)
+  \item \verb!PyTorch 2.6!: Adadelta, Adafactor, Adagrad,
+    Adam, AdamW, SparseAdam, Adamax, ASGD, LBFGS, NAdam,
+    RAdam, RMSprop, Rprop, SGD
+  \end{itemize}
+  
+\end{frame}
+
+%% % ----------------------------------------------------------------------
+%% \begin{frame}
+%%   \frametitle{Cas d'une somme de fonctions}
+
+%%   \[
+%%   (\text{P}^\circ) \quad
+%%     \text{min} \ f(x) := \sum_{i = 1}^{m} q_i(x), \ x \in \R^n
+%%   \]
+
+%%   \[ x^{(k+1)} := x^{(k)} - \lambda^{(k)} {\nabla f}(x^{(k)}), \ \lambda^{(k)} > 0, \]
+
+%%   \[ {\nabla f}(x) = \sum_{i = 1}^{m} {\nabla q_i}(x). \]
+
+%%   ~
+  
+%%   \begin{itemize}
+%%   \item méthode du gradient stochastique : on évalue le gradient
+%%     \begin{itemize}
+%%     \item sur 1 fonction $q_i$ au hasard : ${\nabla f}(x) := {\nabla q_i}(x)$
+%%     \item ou sur plusieurs (\emph{mini-batch}), mais pas sur tout $f$.
+%%     \end{itemize}
+%%   \end{itemize}
+  
+%% \end{frame}

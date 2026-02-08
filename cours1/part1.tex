@@ -1,0 +1,98 @@
+% ----------------------------------------------------------------------
+\section{Introduction}
+% ----------------------------------------------------------------------
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Différentes classes de problèmes}
+
+  \begin{itemize}
+  \item Optimisation combinatoire\\
+    \emph{branch and bound}, \emph{(meta)-heuristiques} 
+  \item \alert{Optimisation continue}
+    \begin{itemize}
+    \item sans contrainte \\
+      \emph{calcul analytique}, \emph{descente de gradient}
+    \item avec contraintes  
+      \begin{itemize}
+        \item non-linéaires
+        \item linéaires \\
+        \emph{simplexe}
+      \end{itemize}
+    \end{itemize}
+  \end{itemize}
+  
+\end{frame}
+
+% ----------------------------------------------------------------------
+\begin{frame}
+  \frametitle{Formulation mathématique}
+
+  \[
+  \text{(P)} \left\{
+  \begin{array}{c}
+    \text{trouver} \ x \ \text{qui minimise} \ f(x) \ \text{tel que :} \\
+    g_i(x) \leq 0, \ i \in I = \{1, \dots, m\} \\
+    x \in S \subseteq \R^n
+  \end{array}
+  \right.
+  \]
+
+  \only<1>{
+    \begin{block}{Vocabulaire}
+    \begin{itemize}
+    \item fonction objectif : $f : \R^n \rightarrow \R$
+    \item inconnues : composantes du vecteur $x := (x_1, \dots, x_n) \in \R^n$
+    \item contraintes : $g_i(x) \leq 0$ et $x \in S$
+    \item une solution (candidate) : $x$ satisfaisant les contraintes
+    \item solution optimale/optimum global : une solution minimisant $f$
+    \end{itemize}
+    %distinction des contraintes en deux:
+    %- generalisation a plusieurs classes de pb
+    %- traites differement dans les algos
+    \end{block}
+  }
+  \only<2>{
+    \begin{block}{Remarques}
+    \begin{itemize}
+    \item max $f'$ $\Leftrightarrow$ min $-f'$
+    \item nombre d'inconnues $n \geq 1$ 
+    \item nombre de contraintes $m \geq 0$
+    \item contraintes d'égalité $g'(x) = 0$ $\Leftrightarrow$ $g'(x) \leq 0$
+      et $-g'(x) \leq 0$
+    \item généralement pas d'inégalités strictes
+    \end{itemize}
+    \end{block}
+    %existence de solution (th. de Weierstrass)
+    %si f est une fonction reelle continue sur K \subset R^n ferme et borne, alors il existe
+    %une solution optimale x \in K qui min f(x)
+    %existence aussi si f est une fonction reelle continue et possède la propriété de croissance à l'infini:
+    %f(x) -> +inf qs x -> +inf
+    %inégalités strictes => ensemble de solutions non ferme et borne, donc possiblement pas de solutions. 
+  }
+  \only<3>{
+    \begin{block}{Résoudre (P) peut être difficile...}
+    \begin{itemize}
+    \item ensemble des solutions vide, très grand, voire infini
+    \item problème non borné 
+    \item $n, m$ grands
+    \item $f$ et $g_i$ quelconques, $f$ non analytiquement connu %ni differentiable, ni convexe, ni lineaire
+    %%\item $f$ peut être (quasiment) plat autour du min
+      %si plat, plusieurs solutions optimales, si quasiment, instabilités numériques 
+    \item cas discret ($S = \Z^n$), NP-complet 
+    \end{itemize}
+    \end{block}
+  }
+
+  \only<4->{
+    \begin{block}{Résoudre (P) peut être facile...}
+    \begin{itemize}
+    \item cas continu
+    \item problème borné
+    \item une solution
+    \item $f$ connu < différentiable < convexe
+    \item aucune contrainte ou des contraintes linéaires
+    \end{itemize}
+    \end{block}
+  }
+\end{frame}
